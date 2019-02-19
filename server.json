@@ -1,0 +1,21 @@
+{
+    "name": "PiCamMonitor",
+    "docs": "https://github.com/Einstein42/udi-poly-template-python",
+    "type": "python3",
+    "executable": "PiCamMonitor.py",
+    "install": "install.sh",
+    "description": "Display single or multiple security ip camera feeds on a Raspberry Pi with 7inch screen when triggered by an ISY event.",
+    "notice": "Use at your own risk",
+    "shortPoll": "120",
+    "longPoll": "240",
+    "credits": [
+        {
+            "title": "PiCamMonitor",
+            "author": "Mark Vittes (markv58)",
+            "version": "1.2.1",
+            "date": "February 8, 2019",
+            "source": "https://github.com/markv58/PiCamMonitor",
+            "license": "https://raw.githubusercontent.com/markv58/PiCamMonitor/master/LICENSE"
+        }
+    ]
+}
