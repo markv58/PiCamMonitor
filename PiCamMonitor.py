@@ -273,15 +273,6 @@ class Controller(polyinterface.Controller):
             self.cam3x_feed1 = self.cam1
             self.cam3x_feed2 = self.cam2
             self.cam3x_feed3 = self.cam3
-
-            
-        #self.addCustomParam({'cam1': self.cam1, 'cam2': self.cam2, 'cam3': self.cam3, 'cam4': self.cam4,
-        #                    'pic_frame_enable': self.picFrameEnable, 'pic_frame_auto': self.picFrameAuto,
-        #                     'pic_screen_level': self.pfscreenLevel, 'cam_screen_level': self.screenLevel,
-        #                     'cam_screen_timer': self.cam_screen_timer, 'sound_on': self.sound,
-        #                     'pic_screen_timer': self.pic_screen_timer, 'screen_connected': self.screenConnected,
-        #                     'pic_start_folder': self.pfFolder})
-       
     
     def setOn(self, command = None): # fire up the stream(s) and show them for the set time
         if self.screenConnected:
