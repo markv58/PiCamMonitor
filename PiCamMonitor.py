@@ -397,7 +397,7 @@ class Controller(polyinterface.Controller):
         if self.picFrameEnable and not self.timer_running:
             self.picFrameRunning = True
             pic_thread = threading.Thread(target=self.picFrameStart)
-            pic_thread.daemon = False
+            pic_thread.daemon = True
             pic_thread.start()
             time.sleep(2)
             self.backlight_on()
