@@ -413,7 +413,12 @@ class Controller(polyinterface.Controller):
         self.setDriver('GV12', _auto)
         if _auto == 1:
             self.picFrameAuto = True
-            self.setOff()
+            if self.script_running:
+                subprocess.call([SPATH + 'killall'])
+                self.setDriver('GV1', 0)
+                self.script_running = False
+            else:
+                pass
             self.pictureFrame()
         elif _auto == 0:
             self.picFrameAuto = False
