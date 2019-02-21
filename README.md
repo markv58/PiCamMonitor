@@ -166,6 +166,10 @@ The PiCamMonitor will automatically start up and run a camera feed and the pictu
 * triple_feed2 The camera to display in the top right panel
 * triple_feed3 The camera to display in the bottom right panel. Any of the 4 cams, cam1 cam2 cam3 or cam4
 
+After changing a parameter and saving, restart the node.
+
+Ater a restart, check the log for any errors. If you see a repeated connect disconnect, restart Polyglot to clear.
+
 ### If you have any issues please visit the forums for assisance.
 
 *I do not recommend the official Pi screen case. It was made wrong, the screen must be mounted upside down and requires a  configuration setting to flip the screen. This results in a terrible viewing angle.
