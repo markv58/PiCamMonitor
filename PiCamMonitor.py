@@ -386,7 +386,7 @@ class Controller(polyinterface.Controller):
         self.autoStartPicFrame()
     
     def pictureFrame(self, command = None):
-        if self.picFrameEnable and not self.timer_running:
+        if self.picFrameEnable and not self.timer_running and not self.script_running:
             self.picFrameRunning = True
             pic_thread = threading.Thread(target=self.picFrameStart)
             pic_thread.daemon = True
@@ -394,7 +394,7 @@ class Controller(polyinterface.Controller):
             time.sleep(2)
             self.backlight_on()
         else:
-            LOGGER.info('Picture Frame not enabled')
+            LOGGER.info('Picture Frame not enabled or a camera stream and/or timer is running')
     
     def picFrameStart(self):
         subprocess.call([SPATH + "screenBrightness", str(self.pfscreenLevel)])
