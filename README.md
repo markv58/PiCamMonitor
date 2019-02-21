@@ -32,7 +32,7 @@ After imaging, insert the sd card into the pi, replace the cover, plug in a usb 
 
 You will be presented with the Welcome screen.
 
-Follow the promts to set up your device, connect to your wifi and then update the software. (This will take a while)
+Follow the promts to set up your device, connect to your wifi and then update the software. (This will take a while) (If you encounter an error before the updates start just click Back and start again, it happens.)
 
 While you wait for the Pi to update, you may want VNC viewer installed on your main computer. https://www.realvnc.com/en/connect/download/viewer/ You might find it useful to install the VNC viewer on an iPad or other tablet.
 
