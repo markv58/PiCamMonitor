@@ -477,8 +477,11 @@ class Controller(polyinterface.Controller):
         _time = int(command.get('value'))
         self.setDriver('GV7', _time)
         self.pic_screen_timer = _time
-        self.stopPicture()
-        self.pictureFrame()
+        if self.picFrameAuto:
+            self.stopPicture()
+            self.pictureFrame()
+        else:
+            pass
     
     def remove_notices_all(self,command):
         LOGGER.info('remove_notices_all:')
