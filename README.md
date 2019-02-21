@@ -108,7 +108,7 @@ Manualy:
 4. chmod +x install.sh 
 5. ./install.sh <enter>
  
-Install the Nodeserver
+Add the Nodeserver. Once PiCamMonitor starts you may need to restart it to populate the driver panels with current information.
 
 # Camera Feeds and Paths
 
@@ -147,6 +147,8 @@ If you have no cam# the value must be 'none'. Fill the camera paths from 1 to 4 
 
 
 # Custom Configuration Parameters
+
+After you have tested and entered your camera stream information, add the screen_connected true parameter and restart PiCamMonitor. After the restart you should see your cam1 stream for the default time.
 
 The PiCamMonitor will automatically start up and run a camera feed and the picture frame option using these settings. All input should be lower case.
 
