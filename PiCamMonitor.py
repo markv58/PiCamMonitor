@@ -119,7 +119,7 @@ class Controller(polyinterface.Controller):
     def check_params(self):
         default_script = 0
         default_timer = 20
-        default_cam = 'None'
+        default_cam = 'none'
         default_level = 130
         
         if 'screen_connected' in self.polyConfig['customParams']:
