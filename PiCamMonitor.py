@@ -380,9 +380,9 @@ class Controller(polyinterface.Controller):
         self.setDriver('GV3', 1)
         
     def backlight_off(self, command = None): # called from the screenOn_timer
+        self.timer_running = False
         subprocess.call([SPATH + 'screenoff'])
         self.setDriver('GV3', 0)
-        self.timer_running = False
         self.autoStartPicFrame()
     
     def pictureFrame(self, command = None):
