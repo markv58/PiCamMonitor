@@ -228,6 +228,7 @@ class Controller(polyinterface.Controller):
                 self.cam4xfeed = True
             else:                                                
                 self.cam4 = 'none'
+                self.cam2x2feed = False
         else:
             LOGGER.error('Please enter the cam4 path or none')
             
