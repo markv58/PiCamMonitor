@@ -4,22 +4,22 @@
 ### END INIT INFO
 
 # Camera Feeds & Positions Quad
-top_left="screen -dmS top_left sh -c 'omxplayer --win \"0 0 400 240\" "$2" -b --live; exec bash'"
-top_right="screen -dmS top_right sh -c 'omxplayer --win \"400 0 800 240\" "$3" --live; exec bash'"
-bot_left="screen -dmS bot_mid sh -c 'omxplayer --win \"0 240 400 480\" "$4" --live; exec bash'"
-bot_right="screen -dmS bot_mid sh -c 'omxplayer --win \"400 240 800 480\" "$5" --live; exec bash'"
+top_left="screen -dmS stream12 sh -c 'omxplayer --win \"0 0 400 240\" "$2" -b --live; exec bash'"
+top_right="screen -dmS stream11 sh -c 'omxplayer --win \"400 0 800 240\" "$3" --live; exec bash'"
+bot_left="screen -dmS stream10 sh -c 'omxplayer --win \"0 240 400 480\" "$4" --live; exec bash'"
+bot_right="screen -dmS stream9 sh -c 'omxplayer --win \"400 240 800 480\" "$5" --live; exec bash'"
 # Triple
-main_left1="screen -dmS top_left sh -c 'omxplayer --win \"0 90 500 390\" "$2" -b --live; exec bash'"
-top_right1="screen -dmS top_right sh -c 'omxplayer --win \"500 60 800 240\" "$3" --live; exec bash'"
-bot_right1="screen -dmS bot_mid sh -c 'omxplayer --win \"500 240 800 420\" "$4" --live; exec bash'"
+main_left1="screen -dmS stream8 sh -c 'omxplayer --win \"0 90 500 390\" "$2" -b --live; exec bash'"
+top_right1="screen -dmS stream7 sh -c 'omxplayer --win \"500 60 800 240\" "$3" --live; exec bash'"
+bot_right1="screen -dmS stream6 sh -c 'omxplayer --win \"500 240 800 420\" "$4" --live; exec bash'"
 # Double1
-left1="screen -dmS top_left sh -c 'omxplayer --win \"0 120 400 360\" "$2" -b --live; exec bash'"
-right1="screen -dmS top_right sh -c 'omxplayer --win \"400 120 800 360\" "$3" --live; exec bash'"
+left1="screen -dmS stream5 sh -c 'omxplayer --win \"0 120 400 360\" "$2" -b --live; exec bash'"
+right1="screen -dmS stream4 sh -c 'omxplayer --win \"400 120 800 360\" "$3" --live; exec bash'"
 # Double2
-left2="screen -dmS top_left sh -c 'omxplayer --win \"0 120 400 360\" "$4" -b --live; exec bash'"
-right2="screen -dmS top_right sh -c 'omxplayer --win \"400 120 800 360\" "$5" --live; exec bash'"
+left2="screen -dmS stream3 sh -c 'omxplayer --win \"0 120 400 360\" "$4" -b --live; exec bash'"
+right2="screen -dmS stream2 sh -c 'omxplayer --win \"400 120 800 360\" "$5" --live; exec bash'"
 # Single
-full_screen1="screen -dmS full_screen sh -c 'omxplayer --win \"0 0 800 480\" "$2" -b --live; exec bash'"
+full_screen1="screen -dmS stream1 sh -c 'omxplayer --win \"0 0 800 480\" "$2" -b --live; exec bash'"
 
 # Camera Feed Names
 camera_feeds_quad=(top_left top_right bot_left bot_right)
