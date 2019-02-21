@@ -461,8 +461,11 @@ class Controller(polyinterface.Controller):
         _folder = int(command.get('value'))
         self.setDriver('GV11', _folder)
         self.pfFolder = _folder
-        self.stopPicture()
-        self.pictureFrame()
+        if self.picFrameAuto:
+            self.stopPicture()
+            self.pictureFrame()
+        else:
+            pass
       
     def setPFscreenLevel(self, command = None):
         _level = int(command.get('value'))
