@@ -1,6 +1,6 @@
 The PiCamMonitor will automatically start up and run a camera feed and the picture frame option using these settings. All input should be lower case.
 
-* cam_screen_level = 0 - 250 (sets the default brightness of the camera feed, 130 default)
+* cam__screen__level = 0 - 250 (sets the default brightness of the camera feed, 130 default)
 * cam_screen_timer = 10 - 120 (sets the default amount of time the feed will play, 20 seconds default)
 * pic_frame_enable = true or false (enable the picture frame option, false default)
 * pic_frame_auto = true or false (auto start the picture frame, false default)
