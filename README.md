@@ -168,7 +168,7 @@ The PiCamMonitor will automatically start up and run a camera feed and the pictu
 
 After changing a parameter and saving, restart the node.
 
-Ater a restart, check the log for any errors. If you see a repeated connect disconnect, restart Polyglot to clear. There is a bug in Polyglot that may require you to re-fresh the page in order to see new log items.
+After a restart, check the log for any errors. If you see a repeated connect disconnect, restart Polyglot to clear. There is a bug in Polyglot that may require you to re-fresh the page in order to see new log items.
 
 ### If you have any issues please visit the forums for assisance.
 
