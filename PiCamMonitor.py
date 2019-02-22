@@ -158,8 +158,8 @@ class Controller(polyinterface.Controller):
             self.screenLevel = default_level                                          
         self.setDriver('GV5', self.screenLevel)
         
-        if 'pic_screen_level' in self.polyConfig['customParams']:
-            self.pfscreenLevel = int(self.polyConfig['customParams']['pic_screen_level'])
+        if 'pic_frame_level' in self.polyConfig['customParams']:
+            self.pfscreenLevel = int(self.polyConfig['customParams']['pic_frame_level'])
         else:
             self.pfscreenLevel = default_level
         self.setDriver('GV8', self.pfscreenLevel)
@@ -170,14 +170,14 @@ class Controller(polyinterface.Controller):
             self.cam_screen_timer = default_timer
         self.setDriver('GV4', int(self.cam_screen_timer))                                   
         
-        if 'pic_start_folder' in self.polyConfig['customParams']:
-            self.pfFolder = int(self.polyConfig['customParams']['pic_start_folder'])
+        if 'pic_frame_folder' in self.polyConfig['customParams']:
+            self.pfFolder = int(self.polyConfig['customParams']['pic_frame_folder'])
         else:
             self.pfFolder = 0
         self.setDriver('GV11', self.pfFolder)
         
-        if 'pic_screen_timer'in self.polyConfig['customParams']:
-            self.pic_screen_timer = int(self.polyConfig['customParams']['pic_screen_timer'])
+        if 'pic_frame_timer'in self.polyConfig['customParams']:
+            self.pic_screen_timer = int(self.polyConfig['customParams']['pic_frame_timer'])
         else:
             self.pic_screen_timer = default_timer
         self.setDriver('GV7', int(self.pic_screen_timer))
