@@ -166,7 +166,7 @@ The PiCamMonitor will automatically start up and run a camera feed and the pictu
 * triple_feed2 The camera to display in the top right panel
 * triple_feed3 The camera to display in the bottom right panel. Any of the 4 cams, cam1 cam2 cam3 or cam4
 
-After changing a parameter and saving, restart the node.
+After changing or adding any parameter(s) and saving, restart the node.
 
 After a restart, check the log for any errors. If you see a repeated connect disconnect, restart Polyglot to clear. There is a bug in Polyglot that may require you to re-fresh the page in order to see new log items.
 
