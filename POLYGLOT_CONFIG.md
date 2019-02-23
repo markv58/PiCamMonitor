@@ -1,3 +1,14 @@
+#### cam1, cam2, cam3 and cam4 must be in the custom configuration parameters.
+    Key        Value
+    cam1       rtsp://user:password@192.192.192.195:544/cam/realmonitor?chanel=1\&subtype=1
+    
+If you have no cam# the value must be 'none'. Fill the camera paths from 1 to 4 for the best results. A single or multi camera feed will not play if there is no camera for the feed.
+
+- cam2x1 plays cam1 and cam2 in 2 equal size windows
+- cam2x2 plays cam3 and cam4 in 2 equal size windows
+- cam3x plays three cams in a large main window and 2 smaller side windows, defaults to cam1, cam2 and cam3, can be changed in custom configuration parameters.
+- cam4x plays all cams in 4 equal windows
+
 The PiCamMonitor will automatically start up and run a camera feed and the picture frame option using these settings. All input should be lower case.
 
     cam_screen_level = 0 - 250 (sets the default brightness of the camera feed, 130 default)
