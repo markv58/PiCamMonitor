@@ -423,6 +423,7 @@ class Controller(polyinterface.Controller):
             self.pictureFrame()
         elif _auto == 0:
             self.picFrameAuto = False
+            subprocess.call([SPATH + 'screenoff'])
             self.stopPicture()
             
     def stopPicture(self, command = None):
