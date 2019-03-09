@@ -2,7 +2,7 @@
 This is a polyglot nodeserver for UDI Isy that runs on a Raspberry Pi 3 B+ with the official 7" RPi touch screen in a SmartiPi Touch case.
 This is a stand alone unit for displaying your ip surveillance camera feeds in a single or multiple feed configuration. Feeds can be displayed using ISY events, maually or with smart home devices such as Alexa through the ISY portal.
 
-There is a Picture Frame option to diplay your photos when the unit is not displaying camera feeds that can be programmed to run only during certain times or all the time. Various folder options allow you to have different themes, Christmas, Birthdays, Halloween, Kids, Favorites, etc., that can be run during certain seasons or on certain days.
+There is a Picture Frame option to display your photos when the unit is not displaying camera feeds that can be programmed to run only during certain times or all the time. Various folder options allow you to have different themes, Christmas, Birthdays, Halloween, Kids, Favorites, etc., that can be run during certain seasons or on certain days.
 
 If you are running the Presence-Poly nodeserver you can also run one on this unit. I expect that there will be further enhancements in the future.
 
