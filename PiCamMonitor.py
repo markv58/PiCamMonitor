@@ -495,7 +495,7 @@ class Controller(polyinterface.Controller):
         st = self.poly.installprofile()
         return st
 
-        def settheflags(self):
+    def settheflags(self):
         subprocess.call('sudo chmod -R +x /home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/', shell=True)
         subprocess.call([SPATH + 'setupfolders.sh'])
         
