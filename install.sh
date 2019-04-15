@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 pip3 install -r requirements.txt --user
+sleep 15s
 cp -a ~/.polyglot/nodeservers/PiCamMonitor/ScriptTemplates/. ~/.polyglot/nodeservers/PiCamMonitor/Scripts/
 sudo chmod +x -R ~/.polyglot/nodeservers/PiCamMonitor/Scripts # activate the scripts
 mkdir /home/pi/Pictures/Family
