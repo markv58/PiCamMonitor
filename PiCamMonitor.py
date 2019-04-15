@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PiCamMonitor v1.2.3
+PiCamMonitor v1.2.4
 This is a NodeServer for UDI Polyglot v2 that will display your ip camera sub-feeds on a 
 Raspberry Pi 3 B+ with attached official 7" touch screen.
 When not showing a camera feed an optional picture frame mode can display images from different folders.
