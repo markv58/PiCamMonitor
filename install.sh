@@ -2,6 +2,7 @@
 
 pip3 install -r requirements.txt --user
 sleep 10s
+mkdir ~/.polyglot/nodeservers/PiCamMonitor/Scripts
 cp -a ~/.polyglot/nodeservers/PiCamMonitor/ScriptTemplates/. ~/.polyglot/nodeservers/PiCamMonitor/Scripts/
 sleep 3s
 sudo chmod +x -R ~/.polyglot/nodeservers/PiCamMonitor/Scripts # activate the scripts
