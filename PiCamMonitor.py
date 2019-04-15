@@ -86,6 +86,7 @@ class Controller(polyinterface.Controller):
     def start(self):
         LOGGER.info('Started PiCamMonitor')
         self.check_params()
+        self.settheflags()
         self.setOn()
         self.query()
 
@@ -494,6 +495,10 @@ class Controller(polyinterface.Controller):
         st = self.poly.installprofile()
         return st
 
+        def settheflags(self):
+        subprocess.call('sudo chmod -R +x /home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/', shell=True)
+        subprocess.call([SPATH + 'setupfolders.sh'])
+        
     drivers = [{'driver': 'ST', 'value': 1, 'uom': 2},    #online
                {'driver': 'GV1', 'value': 0, 'uom': 2},   #feed playing
                {'driver': 'GV2', 'value': 0, 'uom': 25},  #feed name
