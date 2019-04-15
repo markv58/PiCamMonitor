@@ -1,0 +1,8 @@
+#!/bin/bash
+
+sudo killall omxplayer.bin
+screen -X -S stream1 quit
+screen -X -S stream2 quit
+screen -X -S stream3 quit
+screen -X -S stream4 quit
+echo "Camera Display Ended"
