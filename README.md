@@ -173,3 +173,5 @@ After a restart, check the log for any errors. If you see a repeated connect dis
 ### If you have any issues please visit the forums for assisance.
 
 *I do not recommend the official Pi screen case. It was made wrong, the screen must be mounted upside down and requires a  configuration setting to flip the screen. This results in a terrible viewing angle.
+
+v1.2.4 Fixed some bugs, fixed install process.
