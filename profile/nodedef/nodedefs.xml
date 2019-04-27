@@ -14,20 +14,20 @@
               <st id="GV7" editor="count" />
               <st id="GV8" editor="level" />
               <st id="GV9" editor="bool" />
-              <st id="GV12" editor="bool" />
+              <st id="GV12" editor="picframeauto_num" />
               <st id="GV11" editor="folder_num" /> 
             </sts>
         <cmds>
             <sends />
             <accepts>	   
-              <cmd id="DON" />
-              <cmd id="DOF" />
               <cmd id="BACKLIGHT_ON" />
               <cmd id="BACKLIGHT_OFF" />
-              <cmd id="PICFRAME_ON" />
-              <cmd id="PICFRAME_OFF" />
               <cmd id="QUERY" />
-              <cmd id="UPDATE_PROFILE" />       
+              <cmd id="UPDATE_PROFILE" />
+              <cmd id="SYNC_CLONES" />
+              <cmd id="SHUT_DOWN" />
+              <cmd id="REBOOT_PI" />
+              <cmd id="REMOVE_NOTICES_ALL" />
               <cmd id="CAMERA">
                 <p id="" editor="script_num" init="GV2" />
               </cmd>
@@ -38,14 +38,11 @@
                 <p id="" editor="level" init="GV5" />
               </cmd> 
               <cmd id="PIC_FRAME_AUTO">
-                <p id="" editor="bool" init="GV12" />
+                <p id="" editor="picframeauto_num" init="GV12" />
               </cmd>
               <cmd id="FOLDER">
                 <p id="" editor="folder_num" init="GV11" />
               </cmd> 
-              <cmd id="PFSCREENONTIME">
-                <p id="" editor="count" init="GV7" />
-              </cmd>
               <cmd id="PFSCREENBRIGHTNESS">
                 <p id="" editor="level" init="GV8" />
               </cmd> 
@@ -55,4 +52,19 @@
             </accepts>
         </cmds>
     </nodeDef>
+        <!-- clone -->
+    <nodeDef id="clone" nls="cln">
+        <editors />
+            <sts>
+              <st id="ST" editor="bool" />
+              <st id="GV0" editor="bool" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>	   
+            <cmd id="SHUT_DOWN" />
+            <cmd id="REBOOT_PI" />
+            </accepts>
+        </cmds>        
+    </nodeDef>     
 </nodeDefs>
