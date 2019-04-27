@@ -2,30 +2,37 @@
     Key        Value
     cam1       rtsp://user:password@192.192.192.195:544/cam/realmonitor?chanel=1\&subtype=1
     
-If you have no cam# the value must be 'none'. Fill the camera paths from 1 to 4 for the best results. A single or multi camera feed will not play if there is no camera for the feed.
+If you have no cam(#) the value must be 'none'. Fill the camera paths from 1 to 4 for the best results. A single or multi camera feed will not play if there is no camera for the feed.
 
-- cam2x1 plays cam1 and cam2 in 2 equal size windows
-- cam2x2 plays cam3 and cam4 in 2 equal size windows
-- cam3x plays three cams in a large main window and 2 smaller side windows, defaults to cam1, cam2 and cam3, can be changed in custom configuration parameters.
-- cam4x plays all cams in 4 equal windows
+- Cams 1+2 plays cam1 and cam2 in 2 equal size windows
+- Cams 3+4 plays cam3 and cam4 in 2 equal size windows
+- Cams x 3 plays three cams in a large main window and 2 smaller side windows, defaults to cam1, cam2 and cam3, can be changed in custom configuration parameters.
+- Cams x 4 plays all cams in 4 equal windows
 
-The PiCamMonitor will automatically start up and run a camera feed and the picture frame option using these settings. All input should be lower case.
+The PiCamMonitor will automatically start up and run the feature option using these settings. Use lower case for all input.
 
-    cam_screen_level = 0 - 250 (sets the default brightness of the camera feed, 130 default)
-    cam_screen_timer = 10 - 120 (sets the default amount of time the feed will play, 20 seconds default)
+    stand_alone = true or false (false default, set to true if running on a RPi with the 7" official screen).
     
-    pic_frame_enable = true or false (enable the picture frame option, false default)
-    pic_frame_auto = true or false (auto start the picture frame, false default)
-    pic_frame_level = 0 - 250 (sets the default brightness of the picture frame, 130 default)
-    pic_frame_timer = 10 - 120 (sets the default time a picture displays, 20 seconds default)
-    pic_frame_folder = 0 - 20 (sets the default picture folder, 0 default)
+    mm_installed = true or false (false default, set to true if you have a working MagicMirror install).
     
-    screen_connected = true or false (safe guard to ensure you have a screen connected, false default)
-    sound_on = true or false (default sound setting, false default)
-    start_camera = 0 - 7 (sets the camera feed that plays at start up, 0 default)
+    clone1 = 192.192.192.192        Name and IP address of any clone, Key must start with clone.
+    clone_LR = 192.192.192.193      The Key will be the name of the clone node in ISY.
     
-    triple_feed1 The camera to display in the main panel
-    triple_feed2 The camera to display in the top right panel
-    triple_feed3 The camera to display in the bottom right panel. Any of the 4 cams, cam1 cam2 cam3 or cam4
+    cam_screen_level = 0 - 250 (sets the default brightness of the camera feed, 130 default).
+    cam_screen_timer = 10 - 120 (sets the default amount of time the feed will play, 20 seconds default).
+    
+    feature_auto_start = 0 - 2 (0 = Off, 1 = PictureFrame, 2 = MagicMirror, 0 default).
+    feature_screen_level = 0 - 250 (sets the default brightness of the screen when running a feature, 50 default).
+    
+    pic_frame_timer = 10 - 120 (sets the default time a picture displays in the PictureFrame feature, 60 seconds default).
+    pic_frame_folder = 1 - 21 (sets the default PictureFrame folder, 1 default)(Does not affect MagicMirror).
+    
+    sound_on = true or false (default sound setting, false default).
+    
+    triple_feed1 The camera to display in the main window.                Any of the 4 cams
+    triple_feed2 The camera to display in the top right windowl.       cam1 cam2 cam3 or cam4
+    triple_feed3 The camera to display in the bottom right window. 
 
 After changing or adding any parameter(s) and saving, restart the node.
+
+#### When PictureFrame or MagicMirror starts for the first time after a stop or switch, the delay is normal.
