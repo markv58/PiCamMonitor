@@ -8,6 +8,10 @@
         <range uom="25" subset="0-7" nls="SCRIPTS" />
     </editor>
     
+    <editor id="picframeauto_num">
+        <range uom="25" subset="0-2" nls="PICFRAME" />
+    </editor>
+    
     <editor id="folder_num">
         <range uom="25" subset="0-20" nls="FOLDER" />
     </editor>
