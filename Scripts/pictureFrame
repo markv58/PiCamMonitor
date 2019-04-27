@@ -1,3 +1,0 @@
-#!/bin/bash
-
-DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -F -R  60 -Y -D "$1" "$2"
