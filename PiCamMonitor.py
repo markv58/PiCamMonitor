@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """
-PiCamMonitor v1.2.4
+PiCamMonitor v2.0.0
 This is a NodeServer for UDI Polyglot v2 that will display your ip camera sub-feeds on a 
 Raspberry Pi 3 B+ with attached official 7" touch screen.
 When not showing a camera feed an optional picture frame mode can display images from different folders.
+An option for MagicMirror control has been added.
+An option to control clones has been added.
+CloneCtrl1a is the required version for clone control.
 """
 import polyinterface
 import sys
@@ -12,54 +15,67 @@ import os
 import json
 import subprocess
 import threading
-import gc
+import requests
 
 LOGGER = polyinterface.LOGGER
 SPATH = "/home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/./"
-STOPPER = None
+XSPATH = "/home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/./screenCtrl.sh"
 
 # list of args to pass to displaycamera - Do Not Alter
-CAM_SCRIPTS = ['camera1', #0
-               'camera1', #1
+CAM_SCRIPTS = ['camera1', #1
                'camera1', #2
                'camera1', #3
-               'cams2x1', #4
-               'cams2x2', #5
-               'cams3x',  #6
-               'cams4x'   #7
+               'camera1', #4
+               'cams2x1', #5
+               'cams2x2', #6
+               'cams3x',  #7
+               'cams4x'   #8
+              ]
+
+CLN_SCRIPTS = ['camera1', #1
+               'camera2', #2
+               'camera3', #3
+               'camera4', #4
+               'cams2x1', #5
+               'cams2x2', #6
+               'cams3x',  #7
+               'cams4x'   #8
               ]
 
 # list of args to pass to pictureFrame - Do Not Alter
-PICTURE_FOLDERS = ['/home/pi/Pictures/Family',       #0
-                   '/home/pi/Pictures/Friends',      #1
-                   '/home/pi/Pictures/Kids',         #2
-                   '/home/pi/Pictures/Vacation',     #3
-                   '/home/pi/Pictures/Christmas',    #4
-                   '/home/pi/Pictures/Valentines',   #5
-                   '/home/pi/Pictures/StPatricks',   #6
-                   '/home/pi/Pictures/Easter',       #7
-                   '/home/pi/Pictures/YomKippur',    #8
-                   '/home/pi/Pictures/Halloween',    #9
-                   '/home/pi/Pictures/Thanksgiving', #10
-                   '/home/pi/Pictures/NewYears',     #11
-                   '/home/pi/Pictures/Birthday1',    #12
-                   '/home/pi/Pictures/Birthday2',    #13
-                   '/home/pi/Pictures/Birthday3',    #14
-                   '/home/pi/Pictures/Birthday4',    #15
-                   '/home/pi/Pictures/Birthday5',    #16
-                   '/home/pi/Pictures/User1',        #17
-                   '/home/pi/Pictures/User2',        #18
-                   '/home/pi/Pictures/User3',        #19
-                   '/home/pi/Pictures/User4'         #20
+PICTURE_FOLDERS = ['/home/pi/Pictures/Family',       #1
+                   '/home/pi/Pictures/Friends',      #2
+                   '/home/pi/Pictures/Kids',         #3
+                   '/home/pi/Pictures/Vacation',     #4
+                   '/home/pi/Pictures/Christmas',    #5
+                   '/home/pi/Pictures/Valentines',   #6
+                   '/home/pi/Pictures/StPatricks',   #7
+                   '/home/pi/Pictures/Easter',       #8
+                   '/home/pi/Pictures/YomKippur',    #9
+                   '/home/pi/Pictures/Halloween',    #10
+                   '/home/pi/Pictures/Thanksgiving', #11
+                   '/home/pi/Pictures/NewYears',     #12
+                   '/home/pi/Pictures/Birthday1',    #13
+                   '/home/pi/Pictures/Birthday2',    #14
+                   '/home/pi/Pictures/Birthday3',    #15
+                   '/home/pi/Pictures/Birthday4',    #16
+                   '/home/pi/Pictures/Birthday5',    #17
+                   '/home/pi/Pictures/User1',        #18
+                   '/home/pi/Pictures/User2',        #19
+                   '/home/pi/Pictures/User3',        #20
+                   '/home/pi/Pictures/User4'         #21
                   ]
 
 class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
-        super().__init__(polyglot)
-        self.name = 'PiCamMonitor'
-        self.script_running = False
+        super(Controller,self).__init__(polyglot)
+        self.name = 'PiCamMonitorTest'
+        self.script = 0
+        self.script_running = False    #setting all of the variables to their initial state
         self.timer_running = False
         self.picFrameRunning = False
+        self.MMinstalled = False
+        self.MMrunning = False
         self.runTheFeed = True        
         self.cam2x1feed = False
         self.cam2x2feed = False
@@ -71,30 +87,59 @@ class Controller(polyinterface.Controller):
         self.cam4 = 'none'
         self.screenLevel = 130
         self.cam_screen_timer = 20
-        self.picFrameAuto = False        
+        self.picFrameAuto = 0   
         self.picFrameEnable = False        
-        self.pfscreenLevel = 130
+        self.pfscreenLevel = 50
         self.pic_screen_timer = 20
-        self.screenConnected = False
+        #self.screenConnected = False
         self.sound = False
-        self.start_Camera = 0
         self.pfFolder = 0
         self.cam3x_feed1 = self.cam1
         self.cam3x_feed2 = self.cam2
         self.cam3x_feed3 = self.cam3
-                                   
+        self.clones = False
+        self.ignoreSync = False
+        self.clonesInSync = True
+        self.standalone = False
+        
     def start(self):
+        self.removeNoticesAll()
         LOGGER.info('Started PiCamMonitor')
-        self.check_params()
+        time.sleep(1)
+        LOGGER.info('Checking custom parameters')
+        self.check_params() #override the initial variables with custom parameters
+        time.sleep(1)        
         self.settheflags()
-        self.setOn()
+        time.sleep(1)
+        self.backlight_off_manual()
+        LOGGER.info('Checking the status of any clones and starting Feature if enabled')
+        time.sleep(2)
+        self.cloneSync()
+        time.sleep(2)
         self.query()
-
+        LOGGER.info('Start up is complete')
+        LOGGER.info('CloneCtrl1a is required on each clone for control')
+          
     def shortPoll(self):
-        pass
-
-    def longPoll(self):       
-        pass
+        if self.script_running and self.picFrameAuto > 0: # Skip the short poll while a camera feed is displayed
+            pass                                          # and a feature is enabled
+        else:
+            self.clonesInSync = True
+            for node in self.nodes:
+                self.nodes[node].update()
+                _sync = self.nodes[node].getSync()
+                _online = self.nodes[node].getOnline()
+                if not _sync and _online:
+                    self.clonesInSync = False
+                else:
+                    pass
+            if not self.clonesInSync:
+                self.autoCloneSync()   
+            else:
+                pass
+          
+    def longPoll(self):
+            pass
 
     def query(self):
         self.reportDrivers()
@@ -106,83 +151,105 @@ class Controller(polyinterface.Controller):
         LOGGER.info('Deleting PiCamMonitor Node.')
 
     def stop(self): # stop the feed and turn off the backlight before stopping the node
-        if self.script_running:
-            subprocess.call([SPATH + "displaycamera", "killall"])
-        elif self.picFrameRunning:
-            subprocess.call([SPATH + 'stopPicture'])
-        else:
-            pass
-        
-        subprocess.call([SPATH + 'screenoff'])
+        self.setDriver('ST', 0)
         self.setDriver('GV1', 0)
-        LOGGER.debug('PiCamMonitor stopped.')
-
+        self.sendSelfCmd('killall')
+        self.sendSelfCmd('off')
+        self.sendCloneCmd('killall')
+        self.sendCloneCmd('off')
+        LOGGER.info('PiCamMonitor stopped.')
+        
     def check_params(self):
         default_script = 0
-        default_timer = 20
+        default_timer = 60
         default_cam = 'none'
-        default_level = 130
+        cam_default_level = 130
+        pf_default_level = 50
         
-        if 'screen_connected' in self.polyConfig['customParams']:
-            _input = self.polyConfig['customParams']['screen_connected']
-            if _input == 'true':
-                self.screenConnected = True
-        else:
-            self.screenConnected = False
-        
-        if 'start_camera' in self.polyConfig['customParams']:
-            self.script = int(self.polyConfig['customParams']['start_camera'])
-        else:
-            self.script = default_script
+        _params = self.polyConfig['customParams']
+        for key, val in _params.items():    
+            _key = key.lower()
+            if _key.startswith('clone'):
+                self.clones = True
+                _address = val
+                nodeAddress = _address.replace('.','')
+                self.addNode(CloneNode(self, self.address, nodeAddress, _address, 'PCM-' + key))
+            else:
+                pass
  
-        if 'pic_frame_enable' in self.polyConfig['customParams']:
-            _input = self.polyConfig['customParams']['pic_frame_enable']
+        if 'stand_alone' in self.polyConfig['customParams']:
+            _input = self.polyConfig['customParams']['stand_alone']
             if _input == 'true':
-                self.picFrameEnable = True
+                self.standalone = True
+                LOGGER.info('Running in Stand Alone mode')
+            elif _input == 'false' or not self.standalone:
+                LOGGER.info('Running in Controller mode')
+                
+        if 'mm_installed' in self.polyConfig['customParams']:
+            _input = self.polyConfig['customParams']['mm_installed']
+            if _input == 'true':
+                self.MMinstalled = True
                 self.setDriver('GV6', 1)
         else:
-            self.picFrameEnable = False
+            self.MMinstalled = False
             self.setDriver('GV6', 0)
                
-        if 'pic_frame_auto' in self.polyConfig['customParams']:
-            _input = self.polyConfig['customParams']['pic_frame_auto']
-            if _input == 'true':
-                self.picFrameAuto = True
+        if 'feature_auto_start' in self.polyConfig['customParams']:
+            _input = int(self.polyConfig['customParams']['feature_auto_start'])
+            if _input == 0:
+                self.picFrameAuto = 0
+                self.setDriver('GV12', 0)
+            elif _input == 1:
+                self.picFrameAuto = 1
                 self.setDriver('GV12', 1)
+            elif _input == 2:
+                self.picFrameAuto = 2
+                self.setDriver('GV12', 2)
         else:
-            self.picFrameAuto = False
+            self.picFrameAuto = 0
             self.setDriver('GV12', 0)
         
         if 'cam_screen_level'in self.polyConfig['customParams']:
-            self.screenLevel = int(self.polyConfig['customParams']['cam_screen_level'])
-        else:
-            self.screenLevel = default_level                                          
+            _level = int(self.polyConfig['customParams']['cam_screen_level'])
+            if _level > -1 and _level < 251:
+                self.screenLevel = _level
+            else:
+                self.screenLevel = cam_default_level                                          
         self.setDriver('GV5', self.screenLevel)
         
-        if 'pic_frame_level' in self.polyConfig['customParams']:
-            self.pfscreenLevel = int(self.polyConfig['customParams']['pic_frame_level'])
-        else:
-            self.pfscreenLevel = default_level
-        self.setDriver('GV8', self.pfscreenLevel)
-                                           
+        if 'feature_screen_level' in self.polyConfig['customParams']:
+            _level = int(self.polyConfig['customParams']['feature_screen_level'])
+            if _level > -1 and _level < 251:
+                self.pfscreenLevel = _level
+            else:
+                self.pfscreenLevel = pf_default_level
+        self.setDriver('GV8', self.pfscreenLevel)                                 
+        
         if 'cam_screen_timer' in self.polyConfig['customParams']:
-            self.cam_screen_timer = int(self.polyConfig['customParams']['cam_screen_timer'])
-        else:
-            self.cam_screen_timer = default_timer
+            _level = int(self.polyConfig['customParams']['cam_screen_timer'])
+            if _level > 9 and _level < 121:
+                self.cam_screen_timer = _level
+            else:
+                self.cam_screen_timer = default_timer
         self.setDriver('GV4', int(self.cam_screen_timer))                                   
         
         if 'pic_frame_folder' in self.polyConfig['customParams']:
-            self.pfFolder = int(self.polyConfig['customParams']['pic_frame_folder'])
-        else:
-            self.pfFolder = 0
+            _folder = int(self.polyConfig['customParams']['pic_frame_folder'])
+            _folder -= 1
+            if _folder > -1 and _folder < 21:
+                self.pfFolder = _folder
+            else:
+                self.pfFolder = 0
         self.setDriver('GV11', self.pfFolder)
         
         if 'pic_frame_timer'in self.polyConfig['customParams']:
-            self.pic_screen_timer = int(self.polyConfig['customParams']['pic_frame_timer'])
-        else:
-            self.pic_screen_timer = default_timer
+            _level = int(self.polyConfig['customParams']['pic_frame_timer'])
+            if _level > 9 and _level < 121:
+                self.pic_screen_timer = _level
+            else:
+                self.pic_screen_timer = default_timer
         self.setDriver('GV7', int(self.pic_screen_timer))
-        
+                       
         if 'sound_on' in self.polyConfig['customParams']:
             _input = self.polyConfig['customParams']['sound_on']
             if _input == 'true':
@@ -191,9 +258,8 @@ class Controller(polyinterface.Controller):
         else:
             self.sound = False
             self.setDriver('GV9', 0)
-            
-        #set up the cam feeds and permissions
         
+        #set up the cam feeds and permissions  
         if 'cam1' in self.polyConfig['customParams']:
             if str.lower(self.polyConfig['customParams']['cam1']) != 'none':
                 self.cam1 = self.polyConfig['customParams']['cam1']
@@ -202,7 +268,7 @@ class Controller(polyinterface.Controller):
                 self.cam1 = 'none'
         else:
             LOGGER.error('Please enter the cam1 path or none')
-           
+        
         if 'cam2' in self.polyConfig['customParams']:
             if str.lower(self.polyConfig['customParams']['cam2']) != 'none':
                 self.cam2 = self.polyConfig['customParams']['cam2']
@@ -212,7 +278,7 @@ class Controller(polyinterface.Controller):
                 self.cam2 = 'none'
         else:
             LOGGER.error('Please enter the cam2 path or none')
-
+        
         if 'cam3' in self.polyConfig['customParams']:
             if str.lower(self.polyConfig['customParams']['cam3']) != 'none':
                 self.cam3 = self.polyConfig['customParams']['cam3']
@@ -221,8 +287,8 @@ class Controller(polyinterface.Controller):
             else:                                                
                 self.cam3 = 'none'
         else:
-            LOGGER.error('Please enter the cam3 path or none')
-          
+            LOGGER.error('Please enter the cam3 path or none')       
+        
         if 'cam4' in self.polyConfig['customParams']:
             if str.lower(self.polyConfig['customParams']['cam4']) != 'none':
                 self.cam4 = self.polyConfig['customParams']['cam4']
@@ -232,11 +298,11 @@ class Controller(polyinterface.Controller):
                 self.cam2x2feed = False
         else:
             LOGGER.error('Please enter the cam4 path or none')
-            
+        
         if 'triple_feed1' in self.polyConfig['customParams']:
-            LOGGER.info('should set feed order')
+            #LOGGER.info('should set feed order')
             if 'triple_feed1' in self.polyConfig['customParams']:
-                LOGGER.info('setting feed1')    
+                #LOGGER.info('setting feed1')    
                 _feed1 = self.polyConfig['customParams']['triple_feed1']
                 if _feed1 == 'cam1':
                     self.cam3x_feed1 = self.cam1
@@ -245,10 +311,9 @@ class Controller(polyinterface.Controller):
                 elif _feed1 == 'cam3':
                     self.cam3x_feed1 = self.cam3
                 else:
-                    pass
-                  
+                    pass   
             if 'triple_feed2' in self.polyConfig['customParams']:
-                LOGGER.info('setting feed2')
+                #LOGGER.info('setting feed2')
                 _feed2 = self.polyConfig['customParams']['triple_feed2']
                 if _feed2 == 'cam1':
                     self.cam3x_feed2 = self.cam1
@@ -257,10 +322,9 @@ class Controller(polyinterface.Controller):
                 elif _feed2 == 'cam3': 
                     self.cam3x_feed2 = self.cam3
                 else:
-                    pass
-                    
+                    pass     
             if 'triple_feed3' in self.polyConfig['customParams']:
-                LOGGER.info('setting feed3')
+                #LOGGER.info('setting feed3')
                 _feed3 = self.polyConfig['customParams']['triple_feed3']
                 if _feed3 == 'cam1':
                     self.cam3x_feed3 = self.cam1
@@ -271,170 +335,240 @@ class Controller(polyinterface.Controller):
                 else:
                     pass
         else:
-            LOGGER.info('just passed the feed order')
             self.cam3x_feed1 = self.cam1
             self.cam3x_feed2 = self.cam2
             self.cam3x_feed3 = self.cam3
-    
-    def setOn(self, command = None): # fire up the stream(s) and show them for the set time
-        if self.screenConnected:
-            self.setOff()
-            self.runTheFeed = False
-        
-            if self.script < 4:
-                if self.script == 0:
-                    feed = self.cam1
-                elif self.script == 1:
-                    feed = self.cam2
-                elif self.script == 2:
-                    feed = self.cam3
-                elif self.script == 3:
-                    feed = self.cam4
 
-                if feed != 'None':
-                    self.runTheFeed = True
-                    subprocess.call([SPATH + "displaycamera", CAM_SCRIPTS[self.script], feed])
-                else:
-                    LOGGER.info('No camera feed')
+        if 'pic_frame_enable' in self.polyConfig['customParams']:
+            self.addNotice('Please delete pic_frame_enable from the custom parameters')
         
-            if self.script == 4 and self.cam2x1feed:
+        if 'pic_frame_level' in self.polyConfig['customParams']:
+            self.addNotice('Please delete pic_frame_level from the custom parameters')
+            
+        if 'pic_frame_auto' in self.polyConfig['customParams']:
+            self.addNotice('Please delete pic_frame_auto from the custom parameters')
+        
+        if 'screen_connected' in self.polyConfig['customParams']:
+            self.addNotice('Please delete screen_connected from the custom parameters')
+            
+        if 'start_camera' in self.polyConfig['customParams']:
+            self.addNotice('Please delete start_camera from the custom parameters')
+            
+        
+    ####----------- Start of the fun confusing stuff ----------------------------
+   
+    def setOn(self, command = None): # fire up the stream(s) and show them for the set time
+        self.setOff()
+        self.runTheFeed = False
+        if self.script < 4:
+            if self.script == 0:
+                feed = self.cam1
+            elif self.script == 1:
+                feed = self.cam2
+            elif self.script == 2:
+                feed = self.cam3
+            elif self.script == 3:
+                feed = self.cam4
+            if feed != 'none':
                 self.runTheFeed = True
-                subprocess.call([SPATH + "displaycamera", CAM_SCRIPTS[self.script], self.cam1, self.cam2])
-        
-            elif self.script == 5 and self.cam2x2feed:
-                self.runTheFeed = True
-                subprocess.call([SPATH + "displaycamera", CAM_SCRIPTS[self.script], self.cam3, self.cam4])
-        
-            elif self.script == 6 and self.cam3xfeed:
-                self.runTheFeed = True
-                subprocess.call([SPATH + "displaycamera", CAM_SCRIPTS[self.script], self.cam3x_feed1, self.cam3x_feed2, self.cam3x_feed3])
-       
-            elif self.script == 7 and self.cam4xfeed:
-                self.runTheFeed = True
-                subprocess.call([SPATH + "displaycamera", CAM_SCRIPTS[self.script], self.cam1, self.cam2, self.cam3, self.cam4])
-        
-        
-            if self.runTheFeed:
-                LOGGER.info('run the feed')
-                self.script_running = True
-                subprocess.call([SPATH + "screenBrightness", str(self.screenLevel)])
-                time.sleep(2) # allow a bit to get the feeds going
-                self.backlight_on()
-                self.screenOn_timer2() # the timer thread to turn off the screen
-                self.setDriver('GV1', 1)
-                self.setDriver('GV2', self.script)
+                self.sendSelfCmd(CAM_SCRIPTS[self.script], feed)
+                self.sendCloneCmd(CLN_SCRIPTS[self.script])
             else:
-                self.autoStartPicFrame()
-        
+                LOGGER.error('No camera is listed in Configuration')
+        if self.script == 4 and self.cam2x1feed:
+            self.runTheFeed = True
+            self.sendSelfCmd(CAM_SCRIPTS[self.script], self.cam1, self.cam2)
+            self.sendCloneCmd(CLN_SCRIPTS[self.script])
+        elif self.script == 5 and self.cam2x2feed:
+            self.runTheFeed = True
+            self.sendSelfCmd(CAM_SCRIPTS[self.script], self.cam3, self.cam4)
+            self.sendCloneCmd(CLN_SCRIPTS[self.script])
+        elif self.script == 6 and self.cam3xfeed:
+            self.runTheFeed = True
+            self.sendSelfCmd(CAM_SCRIPTS[self.script], self.cam3x_feed1, self.cam3x_feed2, self.cam3x_feed3)
+            self.sendCloneCmd(CLN_SCRIPTS[self.script])
+        elif self.script == 7 and self.cam4xfeed:
+            self.runTheFeed = True
+            self.sendSelfCmd(CAM_SCRIPTS[self.script], self.cam1, self.cam2, self.cam3, self.cam4)
+            self.sendCloneCmd(CLN_SCRIPTS[self.script])
+        if self.runTheFeed:
+            LOGGER.info('run the feed for %s', CLN_SCRIPTS[self.script])
+            self.setDriver('GV1', 1)
+            self.setDriver('GV2', self.script)              
+            self.script_running = True
+            self.sendSelfCmd(str(self.screenLevel))
+            self.sendCloneCmd(str(self.screenLevel))
+            time.sleep(2) # allow a bit to get the feeds going
+            self.backlight_on()
+            self.screenOn_timer2() # the timer thread to turn off the screen
         else:
-            LOGGER.error('No screen connected')
-            return False
+            self.autoStartPicFrame()
             
     def setOff(self, command = None):
         if self.script_running:
-            self.backlight_off()
-            subprocess.call([SPATH + 'killall'])
-            self.setDriver('GV1', 0)
-            self.script_running = False
+            self.stopCamFeed()
         else:
             return False
 
     def screenOn_timer2(self): # timer to turn off the screen
-        gc.collect()
         t = self.cam_screen_timer
         timer_thread = threading.Timer(t, self.backlight_off)
         timer_thread.daemon = True
         timer_thread.start()
         self.play_sound()
         self.timer_running = True
-        #timer_thread.join()
-    
-    def backlight_off_manual(self, command = None): # from the controller Scrn Off button
-        if self.timer_running:
-            LOGGER.info('Screen timer running, skipping')
-        else:
-            subprocess.call([SPATH + 'screenoff'])
-            self.setDriver('GV3', 0)
-    
+
     def setScript(self, command = None): # from the drop down list
-        LOGGER.info('setting the script')
-        if self.picFrameRunning:
+        if self.picFrameRunning or self.MMrunning: #turn off the screen for transition to cam feed
             self.backlight_off_manual()
-            self.stopPicture()
         else:
             pass
-          
         if not self.timer_running:  
             _script = int(command.get('value'))
-            if self.script == _script and self.script_running: # check if the script is already running
+            if self.script == _script and self.script_running: # check if the cam script is already running
                 self.backlight_on()
                 self.screenOn_timer2()
-            else:
-                LOGGER.debug('changing to another feed')
+            else:                                              #switch to the new script
                 self.script = _script
                 self.setOn()
         else:
             LOGGER.info('Still running another timer, skipping')
     
     def backlight_on(self, command = None):
-        subprocess.call([SPATH + 'screenon'])
+        self.sendSelfCmd('on')
+        self.sendCloneCmd('on')
         self.setDriver('GV3', 1)
         
     def backlight_off(self, command = None): # called from the screenOn_timer
         self.timer_running = False
-        subprocess.call([SPATH + 'screenoff'])
+        self.sendSelfCmd('off')
+        self.sendCloneCmd('off')
         self.setDriver('GV3', 0)
-        self.autoStartPicFrame()
+        self.autoStartPicFrame() #go see if a Feature is selected and installed or enabled
     
-    def pictureFrame(self, command = None):
-        if self.picFrameEnable and not self.timer_running and not self.script_running:
-            self.picFrameRunning = True
-            pic_thread = threading.Thread(target=self.picFrameStart)
-            pic_thread.daemon = True
-            pic_thread.start()
-            time.sleep(2)
-            self.backlight_on()
+    def backlight_off_manual(self, command = None): # from the controller Screen Off button, toggles the backlight off
+        if self.timer_running:
+            LOGGER.info('Screen timer running, skipping')
         else:
-            LOGGER.info('Picture Frame not enabled or a camera stream and/or timer is running')
+            self.sendSelfCmd('off')
+            self.sendCloneCmd('off')
+            self.setDriver('GV3', 0)    
     
-    def picFrameStart(self):
-        subprocess.call([SPATH + "screenBrightness", str(self.pfscreenLevel)])
-        subprocess.call([SPATH + "pictureFrame", str(self.pic_screen_timer), PICTURE_FOLDERS[self.pfFolder]])
-                                             
+    def picFrameStart(self): # called from Picture Frame
+        _time = str(self.pic_screen_timer)
+        _folder = PICTURE_FOLDERS[self.pfFolder]
+        self.sendSelfCmd(str(self.pfscreenLevel))
+        self.sendSelfCmd('pictureFrame', _time, _folder)  
+       
+    def pictureFrame(self):
+        self.picFrameRunning = True
+        LOGGER.info('Starting PictureFrame')
+        pic_thread = threading.Thread(target=self.picFrameStart)
+        pic_thread.daemon = True
+        pic_thread.start()
+        time.sleep(2)
+        self.backlight_on()
+        self.picFrameClones()
+        
+    def picFrameClones(self):
+        _level = str(self.pfscreenLevel) # for the clones
+        self.sendCloneCmd(_level)       
+        self.sendCloneCmd('pf' + str(self.pfFolder))
+    
     def autoStartPicFrame(self, command = None):
-        if self.picFrameEnable and self.picFrameAuto:
-            subprocess.call([SPATH + 'killall'])
-            self.setDriver('GV1', 0)
-            self.script_running = False
+        if self.picFrameAuto == 1 and not self.picFrameRunning:
+            self.stopCamFeed()
             self.pictureFrame()
-        else:
-            return False
-          
-    def picFrameAuto(self, command = None):
-        _auto = int(command.get('value'))
-        self.setDriver('GV12', _auto)
-        if _auto == 1:
-            self.picFrameAuto = True
-            if self.script_running:
-                subprocess.call([SPATH + 'killall'])
-                self.setDriver('GV1', 0)
-                self.script_running = False
-            else:
-                pass
-            self.pictureFrame()
-        elif _auto == 0:
-            self.picFrameAuto = False
-            subprocess.call([SPATH + 'screenoff'])
-            self.stopPicture()
-            
-    def stopPicture(self, command = None):
-        if self.picFrameRunning:
-            subprocess.call([SPATH + 'screenoff'])
-            subprocess.call([SPATH + 'stopPicture'])
-            self.picFrameRunning = False
-        else:
-            LOGGER.info('Picture Frame not running')
+        elif self.picFrameAuto == 1 and self.picFrameRunning:   
+            self.stopCamFeed()
+            self.backlight_on()
+        elif self.picFrameAuto == 2 and self.MMinstalled  and not self.MMrunning:
+            self.stopCamFeed()
+            self.startMM()
+        elif self.picFrameAuto == 2 and self.MMinstalled  and self.MMrunning:
+            self.stopCamFeed()
+            self.sendSelfCmd(str(self.pfscreenLevel))
+            self.sendCloneCmd(str(self.pfscreenLevel))
+            self.backlight_on() 
+        elif self.picFrameAuto == 0:
+            pass
     
+    def picFrameAuto(self, command = None): # triggered by the Optional Feature drop down
+        _auto = int(command.get('value'))
+        if _auto == 0: # stop any running Feature
+            self.picFrameAuto = 0
+            self.setDriver('GV12', 0)
+            if self.timer_running:
+                self.stopFeatureLive()
+            else:    
+                self.stopFeature()
+ 
+        elif _auto == 1: #run Picture Frame
+            self.picFrameAuto = 1
+            self.setDriver('GV12', 1)
+            if self.script_running and not self.timer_running: #stop the cam feed
+                self.stopCamFeed()
+                self.pictureFrame()
+            elif self.script_running and self.timer_running:
+                self.stopFeatureLive()
+            else:
+                self.stopFeature()
+                self.pictureFrame()
+                
+        elif _auto == 2: # run MagicMirror
+            if self.MMinstalled:
+                self.picFrameAuto = 2
+                self.setDriver('GV12', 2)
+                if self.script_running and not self.timer_running:    #stop the cam feed first
+                    self.stopCamFeed()
+                    self.startMM()
+                elif self.script_running and self.timer_running:
+                    self.stopFeatureLive()
+                else:    
+                    self.stopFeature()
+                    self.startMM()
+            else:
+                LOGGER.info('MagicMirror is not installed')
+    
+    def stopCamFeed(self, command = None):
+        self.sendSelfCmd('off')
+        self.sendCloneCmd('off')
+        self.sendSelfCmd('omxkill')
+        self.sendCloneCmd('omxkill')
+        self.setDriver('GV1', 0)
+        self.script_running = False
+          
+    def startMM(self, command = None):
+        LOGGER.info('Starting MagicMirror')
+        self.sendSelfCmd('MMstart')
+        self.sendCloneCmd('MMstart')
+        time.sleep(6)             #let MM get started before turning on the backlight
+        self.sendSelfCmd(str(self.pfscreenLevel))
+        self.sendSelfCmd('on')
+        self.sendCloneCmd(str(self.pfscreenLevel))
+        self.sendCloneCmd('on')
+        self.MMrunning = True
+        
+    def stopFeature(self):
+        self.sendSelfCmd('off')
+        if self.picFrameRunning:
+            self.sendSelfCmd('pkill')
+        elif self.MMrunning:
+            self.sendSelfCmd('mkill')
+        self.sendCloneCmd('off')
+        self.sendCloneCmd('pkill')
+        self.MMrunning = False
+        self.picFrameRunning = False
+ 
+    def stopFeatureLive(self):
+        if self.picFrameRunning:
+            self.sendSelfCmd('pkill')
+        elif self.MMrunning:
+            self.sendSelfCmd('mkill')
+        self.sendCloneCmd('pkill')
+        self.MMrunning = False
+        self.picFrameRunning = False
+
     def soundOn(self, command):
         _sound = int(command.get('value'))
         if _sound == 1:
@@ -445,9 +579,12 @@ class Controller(polyinterface.Controller):
             self.sound = False
             self.setDriver('GV9', 0)
     
-    def play_sound(self):
-        if self.sound:
+    def play_sound(self):      #work on this one
+        if self.sound and self.standalone:
+            self.sendCloneCmd('playsound')
             subprocess.call([SPATH + '2tone'])
+        elif self.sound:
+            self.sendCloneCmd('playsound')
         else:
             return False
     
@@ -455,37 +592,103 @@ class Controller(polyinterface.Controller):
         self.cam_screen_timer = int(command.get('value'))
         self.setDriver('GV4', self.cam_screen_timer)
     
-    def setScreenLevel(self, command = None):
+    def setScreenLevel(self, command = None): # sets cam feed level
         self.screenLevel = int(command.get('value'))
         self.setDriver('GV5', self.screenLevel)
-        subprocess.call([SPATH + "screenBrightness", str(self.screenLevel)])
-    
+        if self.timer_running:
+            self.sendSelfCmd(str(self.screenLevel))
+            self.sendCloneCmd(str(self.screenLevel))
+        else:
+            pass
+        
     def picFrameFolder(self, command = None):
         _folder = int(command.get('value'))
         self.setDriver('GV11', _folder)
         self.pfFolder = _folder
-        if self.picFrameAuto:
-            self.stopPicture()
+        if self.picFrameAuto == 1 and self.picFrameRunning:
+            self.stopFeature()
             self.pictureFrame()
         else:
             pass
       
-    def setPFscreenLevel(self, command = None):
+    def setPFscreenLevel(self, command = None): # sets feature level
         _level = int(command.get('value'))
         self.pfscreenLevel = _level
         self.setDriver('GV8', _level)
-        subprocess.call([SPATH + "screenBrightness", str(self.pfscreenLevel)])
-    
-    def setPFscreenOnTime(self, command = None):
-        _time = int(command.get('value'))
-        self.setDriver('GV7', _time)
-        self.pic_screen_timer = _time
-        if self.picFrameAuto:
-            self.stopPicture()
-            self.pictureFrame()
+        if not self.timer_running:
+            self.sendSelfCmd(str(self.pfscreenLevel))
+            self.sendCloneCmd(str(self.pfscreenLevel))
         else:
             pass
+          
+    def sendSelfCmd(self, *args):
+        if self.standalone:
+            subprocess.call([XSPATH, *args])
+        else:
+            pass
+
+    def sendCloneCmd(self, command):
+        if self.clones:
+            for node in self.nodes:
+                ip = self.nodes[node].getip()
+                if self.ignoreSync:
+                    _sync = True
+                else:
+                    _sync = self.nodes[node].getSync()
+                    
+                if ip != None and _sync:
+                    try:
+                        url = 'http://' + ip + ':6502/cgi-bin/CloneCtrl1a?' + command
+                        r = requests.get(url, verify=False, timeout=2)                
+                    except requests.exceptions.Timeout:
+                        self.nodes[node].setSyncFalse()
+                        self.cloneSyncBad = True
+                        LOGGER.warning('There was a problem sending the command to clone %s', ip)
+                        return None
+                else:
+                    pass
+        else:
+            return False
+      
+    def shutDownPi(self,command):
+        LOGGER.info('Shutting down the Clones and Stand Alone Master')
+        self.setDriver('ST', 0)
+        self.sendCloneCmd('shutDownPi')
+        time.sleep(10)
+        self.sendSelfCmd('shutDownPi')
     
+    def piReboot(self,command):
+        LOGGER.info('Rebooting all Clones now and the Stand Alone Master in 10 seconds')
+        self.setDriver('ST', 0) 
+        self.sendCloneCmd('rebootPi')
+        time.sleep(10)
+        self.sendSelfCmd('rebootPi')
+    
+    def autoCloneSync(self):
+        if self.clones:
+            LOGGER.warning('A clone is out of sync, Synchronizing in 20 seconds.')
+            time.sleep(20)
+            self.cloneSync()   
+        else:
+            pass
+          
+    def cloneSync(self, command = None):
+        while self.script_running:
+            time.sleep(1)
+        LOGGER.info('Synchronizing the Controller and Clones')
+        self.ignoreSync = True
+        time.sleep(2)
+        self.sendSelfCmd('killall')
+        self.sendCloneCmd('killall')
+        for node in self.nodes:
+            self.nodes[node].setSyncTrue() 
+        self.picFrameRunning = False
+        self.MMrunning = False
+        self.ignoreSync = False
+        self.clonesInSync = True
+        self.shortPoll()
+        self.autoStartPicFrame()
+        
     def remove_notices_all(self,command):
         LOGGER.info('remove_notices_all:')
         self.removeNoticesAll()
@@ -494,11 +697,35 @@ class Controller(polyinterface.Controller):
         LOGGER.info('update_profile:')
         st = self.poly.installprofile()
         return st
-
+    
     def settheflags(self):
-        subprocess.call('sudo chmod -R +x /home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/', shell=True)
-        subprocess.call([SPATH + 'setupfolders.sh'])
-        
+        if self.standalone:
+            subprocess.call('sudo chmod -R +x /home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/', shell=True)
+            subprocess.call([SPATH + 'setupfolders.sh', 'normal'])
+            subprocess.call([SPATH + 'setupMM.sh', 'normal'])
+        else:
+            pass
+          
+    #### --- Necessary files - Do Not Delete --- ####
+      
+    def update(self):
+        pass    
+    
+    def setSyncTrue(self):
+        pass
+    
+    def CloneCmd(self):
+        pass
+    
+    def getip(self):
+        pass
+    
+    def getSync(self):
+        return True
+    
+    def getOnline(self):
+        return True
+      
     drivers = [{'driver': 'ST', 'value': 1, 'uom': 2},    #online
                {'driver': 'GV1', 'value': 0, 'uom': 2},   #feed playing
                {'driver': 'GV2', 'value': 0, 'uom': 25},  #feed name
@@ -509,51 +736,156 @@ class Controller(polyinterface.Controller):
                {'driver': 'GV7', 'value': 0, 'uom': 56},  #pf timer
                {'driver': 'GV8', 'value': 0, 'uom': 56},  #pf bright
                {'driver': 'GV9', 'value': 0, 'uom': 2},  #sound
-               {'driver': 'GV12', 'value': 0, 'uom': 2},  #pf auto
+               {'driver': 'GV12', 'value': 0, 'uom': 25},  #pf auto
                {'driver': 'GV11', 'value': 0, 'uom':25}   #pf folder
               ]
             
     id = 'controller'
     commands = {
-                'DON': setOn,
-                'DOF': setOff,
                 'BACKLIGHT_ON':backlight_on,
                 'BACKLIGHT_OFF':backlight_off_manual,   
-                'PICFRAME_ON': pictureFrame,
-                'PICFRAME_OFF': stopPicture,
                 'QUERY': query,
                 'UPDATE_PROFILE': update_profile,
+                'SYNC_CLONES': cloneSync,
+                'SHUT_DOWN': shutDownPi,
+                'REBOOT_PI': piReboot,
+                'REMOVE_NOTICES_ALL': remove_notices_all,
                 'CAMERA': setScript,
                 'SCREENONTIME': setScreenOnTime,
                 'SCREENBRIGHTNESS': setScreenLevel,
                 'PIC_FRAME_AUTO': picFrameAuto,
                 'FOLDER': picFrameFolder,
                 'PFSCREENBRIGHTNESS': setPFscreenLevel,
-                'PFSCREENONTIME': setPFscreenOnTime,
                 'SOUND_ON': soundOn
                }
 
+class PingHelper(object):
+
+    def __init__(self, ip, timeout):
+        self.ip = ip
+        self.timeout = timeout
+
+    def ping(self):
+        try:
+            response = os.system("ping -c 1 -W " + str(self.timeout) + " " + self.ip)
+            if response == 0:
+                return response
+            else:
+                return None
+        except:
+            # Capture any exception
+            return None
+ 
+class CloneNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, ipaddress, name):
+        super(CloneNode, self).__init__(controller, primary, address, name)
+        self.ip = ipaddress
+        self.scan = 1
+        self.strength = 0
+        self.cloneSync = False
+        self.online = False
+        
+    def start(self):
+        self.update    
+
+    def setOn(self):
+        self.setDriver('ST', 1)
+        self.online = True
+
+    def setOff(self):
+        self.setDriver('ST', 0)
+        self.online = False
+
+    def update(self):
+        if (self.scan):
+            onnet = PingHelper(ip=self.ip,timeout=1)
+            result = onnet.ping()
+            if (result != None):
+                self.setOnNetwork(5)
+                #LOGGER.debug('Network ' + self.ip + ': OK')
+            elif (self.strength > 1):
+                self.setOnNetwork(self.strength - 1)
+                self.cloneSync = False
+                LOGGER.info('Network ' + self.ip + ': In Fault')
+            elif (self.strength == 1):
+                LOGGER.info('Network ' + self.ip + ': Out of Network')
+                self.setOffNetwork()             
+            
+    def setOnNetwork(self,strength):
+        self.setOn()
     
+    def setOffNetwork(self):
+        self.setDriver('GV0', 0)
+        self.cloneSync = False
+    
+    def query(self):
+        self.reportDrivers()     
+    
+    def setSyncTrue(self):
+        self.cloneSync = True
+        self.setDriver('GV0', 1)
+    
+    def setSyncFalse(self):
+        self.cloneSync = False
+        self.setDriver('GV0', 0)
+        
+    def getip(self):
+        ip = self.ip
+        return ip
+    
+    def getSync(self):
+        sync = self.cloneSync
+        return sync  
+    
+    def getOnline(self):
+        _online = self.online
+        return _online
+    
+    def CloneCmd(self,command):
+        _ip = str(self.ip)
+        url = 'http://' + _ip + ':6502/cgi-bin/CloneCtrl1a?' + command
+        requests.get(url)
+
+    def getSync(self):
+        sync = self.cloneSync
+        return sync
+    
+    def shutDownPi(self,command):
+        LOGGER.info('Shutting down the Clone')
+        self.cloneSync = False
+        self.setOff()
+        self.setDriver('GV0', 0)
+        time.sleep(2)
+        self.CloneCmd('off')
+        self.CloneCmd('shutDownPi')
+    
+    def piReboot(self,command):
+        LOGGER.info('Rebooting the Clone in 2 seconds')
+        self.cloneSync = False
+        self.setOff()
+        self.setDriver('GV0', 0)
+        time.sleep(2)
+        self.CloneCmd('off')
+        time.sleep(1)
+        self.CloneCmd('rebootPi')
+
+    drivers = [
+               {'driver': 'ST', 'value': 0, 'uom': 2},
+               {'driver': 'GV0', 'value': 0, 'uom': 2}
+              ]
+
+    id = 'clone'
+
+    commands = {
+                'SHUT_DOWN': shutDownPi,
+                'REBOOT_PI': piReboot
+               }
+
 if __name__ == "__main__":
     try:
         polyglot = polyinterface.Interface('PiCamMonitor')
-        """
-        Instantiates the Interface to Polyglot.
-        """
         polyglot.start()
-        """
-        Starts MQTT and connects to Polyglot.
-        """
         control = Controller(polyglot)
-        """
-        Creates the Controller Node and passes in the Interface
-        """
         control.runForever()
-        """
-        Sits around and does nothing forever, keeping your program running.
-        """
     except (KeyboardInterrupt, SystemExit):
         sys.exit(0)
-        """
-        Catch SIGTERM or Control-C and exit cleanly.
-        """
