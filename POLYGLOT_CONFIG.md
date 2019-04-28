@@ -14,7 +14,9 @@ The PiCamMonitor will automatically start up and run the feature option using th
     stand_alone = true or false (false default, set to true if running on a RPi with the 7" official screen).
     
     mm_installed = true or false (false default, set to true if you have a working MagicMirror install).
-    
+                                 (MagicMirror2 MUST be installed on all clones and on the stand-alone or setting)
+                                 (this to true will cause some problems)
+                                 
     clone1 = 192.192.192.192        Name and IP address of any clone, Key must start with clone.
     clone_LR = 192.192.192.193      The Key will be the name of the clone node in ISY.
     
