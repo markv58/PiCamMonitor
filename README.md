@@ -1,12 +1,37 @@
 # PiCamMonitor
-This is a polyglot nodeserver for UDI Isy that runs on a Raspberry Pi 3 B+ with the official 7" RPi touch screen in a SmartiPi Touch case.
-This is a stand alone unit for displaying your ip surveillance camera feeds in a single or multiple feed configuration. Feeds can be displayed using ISY events, maually or with smart home devices such as Alexa through the ISY portal.
+
+#### v2 - This is a major update, please read the Upgrade section below.
+
+This is a Polyglot Nodeserver for UDI Isy that can run either as a controller on your local Polyglot to control clones or on a Raspberry Pi 3 B+ with the official 7" RPi touch screen in a SmartiPi Touch case. Running in stand alone mode gives you another instance of a Polyglot Nodeserver that you can install nodes onto such as the Presence-Poly.
+
+This will display your ip surveillance camera feeds in a single or multiple feed configuration on the RPi. Feeds can be displayed using ISY events, Blue Iris alerts, maually or with smart home devices such as Alexa through the ISY portal.
 
 There is a Picture Frame option to display your photos when the unit is not displaying camera feeds that can be programmed to run only during certain times or all the time. Various folder options allow you to have different themes, Christmas, Birthdays, Halloween, Kids, Favorites, etc., that can be run during certain seasons or on certain days.
 
-If you are running the Presence-Poly nodeserver you can also run one on this unit. I expect that there will be further enhancements in the future.
+An option to use MagicMirror2 for the display has been added. This will display your photos from a single directory only and adds a clock, the current weather and the weather forecast on the screen using the supplied configuration file. You can of course customize your MagicMirror display any way you like.
 
-# Installation
+
+#### v2 - You can now have clones of a PiCamMonitor that will mirror the controller. This means you can have many around the house and only use a single node slot.
+
+Clones must have the same options installed as the Controller if running in stand alone mode.  
+
+The Short poll checks if the Clones are online and synchronized. If there is a problem with a clone the system will re-sync automatically.
+
+## Upgrade from v1.2.2
+
+If you are upgrading to a stand alone unit install:
+
+     sudo apt-get install unclutter
+
+Set the screen resolution detailed in the Set Resolution section below.
+
+Install MagicMirror as detailed in the MagicMirror installation section below.
+
+If converting an existing PiCamMonitor to a clone see the section on Clones below.
+
+# Installation of PiCamMonitor:
+
+### If installing on a local Polyglot to clontrol clones, install from the NodeServer Store and skip to the Clones section below.
 
 ### HARDWARE:
 
@@ -40,7 +65,11 @@ When the updates have been installed, click OK and then reboot. Click the raspbe
 
 On the first page select Wait for Network. Select Interfaces tab and check SSH and VNC enable. Select Performance tab and change the GPU memory to 256. Click OK then YES to reboot.
 
-Set a static ip address. Depending on your system there are various way to achieve this. On the Pi itself, open the terminal window and enter 'sudo nano /etc/dhcpcd.conf' , hit enter and scroll to the bottom.
+Set a static ip address. Depending on your system there are various way to achieve this. On the Pi itself, open the terminal window and enter
+
+    sudo nano /etc/dhcpcd.conf
+    
+hit enter and scroll to the bottom.
 
 Enter (editing the ip numbers to match your network configuration, eth0=wired, wlan0=wireless):
 
@@ -48,21 +77,72 @@ Enter (editing the ip numbers to match your network configuration, eth0=wired, w
 
     static ip_address=192.168.0.10/24
     static routers=192.168.0.1
-    static domain_name_servers=192.168.0.1
+    static domain_name_servers=8.8.8.8 8.8.4.4
     
     interface wlan0
     
     static ip_address=192.168.0.200/24
     static routers=192.168.0.1
-    static domain_name_servers=192.168.0.1
+    static domain_name_servers=8.8.8.8 8.8.4.4
 
-Exit the editor, press ctrl+x, press the letter 'Y' then enter. Note your ip address and 
-type 'sudo reboot' and hit enter for the changes to take affect. 
+Note your ip address. Exit the editor, press ctrl+x, press the letter 'Y' then enter.
+
+Enter:
+
+    sudo reboot
+    
+and hit enter for the changes to take affect. 
+
 You can now move to VNC, ssh or continue with the mouse and keyboard.
 
-Next we need to stop the screen from blanking after 10 minutes. In the terminal enter 'sudo apt-get install xscreensaver' then hit enter. Once all the files are installed and you are back to the prompt, type 'sudo reboot' and hit enter. When the Pi is back up to the desktop select the raspberry/Preferences/Screensaver and set the Mode: to Disable Screen Saver and close the window. Now the screen should stay on like we want.
+I've found it easier to cut and paste the commands using ssh and working with the Pi desktop using the VNC option.
 
-Set up Samba so you can transfer your pictures, in the terminal enter 'sudo apt-get install samba samba-common-bin' and hit enter. Back at the prompt enter: 'sudo nano /etc/samba/smb.conf' and hit enter. Scroll to the very bottom and enter:
+### Set Resolution
+
+This will make MagicMirror use the screen efficiently and gives you a better desktop resolution if you want to work
+on some of the Pi settings like the screen saver and desktop settings.
+
+    cd ~
+    cd /boot
+    sudo nano config.txt
+
+Scroll down serveral lines and find the lines below and edit so that they are the same.
+
+    # uncomment to force a console size. By default it will be display's size minus
+    # overscan.
+    framebuffer_width=1160
+    framebuffer_height=700
+
+Hit ctrl+x then 'Y' and enter to save the changes.
+
+Reboot the Pi:
+
+    sudo reboot
+
+Setup your desktop preferences if you choose.
+
+### Screensaver
+
+Next we need to stop the screen from blanking after 10 minutes. In the terminal enter
+
+    sudo apt-get install xscreensaver 
+    
+then hit enter. 
+
+Once all the files are installed and you are back to the prompt it's time to run the screen saver and set it to disable.
+Go to the desktop select the raspberry/Preferences/Screensaver and set the mode to Disable Screen Saver and close the window. You may be asked to start the service. Now the screen should stay on like we want.
+
+### Samba
+
+Set up Samba so you can transfer your pictures, in the terminal enter
+
+    sudo apt-get install samba samba-common-bin
+    
+and hit enter. Back at the prompt enter
+
+    sudo nano /etc/samba/smb.conf
+    
+and hit enter. Scroll to the very bottom and enter:
 
     [global]
 
@@ -86,31 +166,81 @@ Set up Samba so you can transfer your pictures, in the terminal enter 'sudo apt-
     read only = no
     force user = root
   
-Again, press ctrl+x hit 'Y' then enter to save the file. Enter: 'sudo samba restart' enter for the changes to take effect. When you connect from your computer, log in as guest and copy your pictures to the appropriate folder under the Pictures folder.
-  
-Two more quick installs and we are ready for Polyglot.
-* Install screen: sudo apt-get install screen
-* Install feh: sudo apt-get install feh
+Again, press ctrl+x hit 'Y' then enter to save the file. Enter:
 
-Install polyglot: wget -qO - https://raw.githubusercontent.com/UniversalDevicesInc/polyglot-v2/master/scripts/install.sh | bash -e
+    sudo samba restart
+    
+then enter for the changes to take effect. When you connect from your computer, log in as guest and you can copy your pictures to the appropriate folder under the /home/pi/Pictures folder or to the /home/pi/MagicMirror/modules/Pictures folder that MagicMirror will use. The initial install will copy sample.jpg to every picture folder to avoid errors from choosing an empty folder. Delete that file when you populate the folder.
+  
+Three more quick installs and we are ready for MagicMirror2 and Polyglot. Enter the following, answer y if asked to let them install.
+
+    sudo apt-get install screen
+    sudo apt-get install feh
+    sudo apt-get install unclutter
+
+### MagicMirror installation:
+
+Execute the following one at a time:
+
+    cd ~
+    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    sudo apt install -y nodejs
+
+    git clone https://github.com/MichMich/MagicMirror
+    cd MagicMirror
+    npm install
+
+⚠️ Important!
+
+The installation step for npm install will take a few minutes, often with little or no terminal response! 
+Do not interrupt or you risk getting a jam.
+
+    cd modules
+    git clone https://github.com/darickc/MMM-BackgroundSlideshow.git
+    cd MMM-BackgroundSlideshow
+    npm install
+
+Ignore warnings.
+
+#### You will need to register for and get an API key for the weather module:
+
+    https://openweathermap.org
+
+This will download the city list where you can find your location id:
+
+    http://bulk.openweathermap.org/sample/city.list.json.gz
+
+When you install PiCamMonitor configuration files will also be installed for MagicMirror. This will get you up and running quickly and you can modify the MagicMirror to suit your needs if you choose to.
+
+Insert your weather module information in the configuration file after Polyglot and PiCamMonitor are installed:
+
+    cd ~/MagicMirror/config
+    nano config.js 
+
+### Polyglot installation:
+
+    cd ~
+    wget -qO - https://raw.githubusercontent.com/UniversalDevicesInc/polyglot-v2/master/scripts/install.sh | bash -e
 
 Set up the Polyglot. You got this now.
 
 (It's not a bad idea to backup your ISY at this point, really, do it just in case.)
 
-#### Install PiCamMonitor, get it from the Node Store or manualy here: https://github.com/markv58/PiCamMonitor.git
+### PiCamMonitor installation, get it from the Node Store or manualy here: 
+
+    https://github.com/markv58/PiCamMonitor.git
 
 Manualy: 
 
-1. cd .polyglot/nodeservers
-2. git clone https://github.com/markv58/PiCamMonitor.git 
-3. cd PiCamMonitor 
-4. chmod +x install.sh 
-5. ./install.sh <enter>
+    cd .polyglot/nodeservers
+    git clone https://github.com/markv58/PiCamMonitor.git 
+    cd PiCamMonitor 
+    chmod +x install.sh 
+    ./install.sh <enter>
  
 Add the Nodeserver. Once PiCamMonitor starts you may need to restart it to populate the driver panels with current information.
 
-# Camera Feeds and Paths
+### Camera Feeds and Paths setup and testing:
 
 With high resolution cameras you will use the sub stream, the higher resolutions will not play properly. Log into your camera through a web brower and make sure your sub stream is enabled, set to 640x480 and the highest frame rate. Set the key frame to twice the max frame rate. This will make your streams load faster.
 
@@ -140,38 +270,62 @@ This will run the sub stream on an Amcrest and most other high resolution camera
     
 If you have no cam# the value must be 'none'. Fill the camera paths from 1 to 4 for the best results. A single or multi camera feed will not play if there is no camera for the feed.
 
-- cam2x1 plays cam1 and cam2 in 2 equal size windows
-- cam2x2 plays cam3 and cam4 in 2 equal size windows
-- cam3x plays three cams in a large main window and 2 smaller side windows, defaults to cam1, cam2 and cam3, can be changed in custom configuration parameters.
-- cam4x plays all cams in 4 equal windows
-
+- Cams 1+2 plays cam1 and cam2 in 2 equal size windows
+- Cams 3+4 plays cam3 and cam4 in 2 equal size windows
+- Cams x 3 plays three cams in a large main window and 2 smaller side windows, defaults to cam1, cam2 and cam3, can be changed in custom configuration parameters.
+- Cams x 4 plays all cams in 4 equal windows
 
 # Custom Configuration Parameters
 
 After you have tested and entered your camera stream information, add the screen_connected true parameter and restart PiCamMonitor. After the restart you should see your cam1 stream for the default time.
 
-The PiCamMonitor will automatically start up and run a camera feed and the picture frame option using these settings. All input should be lower case.
+The PiCamMonitor will automatically start up and run the feature option using these settings. All input should be lower case.
 
-* cam_screen_level = 0 - 250 (sets the default brightness of the camera feed, 130 default)
-* cam_screen_timer = 10 - 120 (sets the default amount of time the feed will play, 20 seconds default)
-* pic_frame_enable = true or false (enable the picture frame option, false default)
-* pic_frame_auto = true or false (auto start the picture frame, false default)
-* pic_frame_level = 0 - 250 (sets the default brightness of the picture frame, 130 default)
-* pic_frame_timer = 10 - 120 (sets the default time a picture displays, 20 seconds default)
-* pic_frame_folder = 0 - 20 (sets the default picture folder, 0 default)
-* screen_connected = true or false (safe guard to ensure you have a screen connected, false default)
-* sound_on = true or false (default sound setting, false default)
-* start_camera = 0 - 7 (sets the camera feed that plays at start up, 0 default)
-* triple_feed1 The camera to display in the main panel
-* triple_feed2 The camera to display in the top right panel
-* triple_feed3 The camera to display in the bottom right panel. Any of the 4 cams, cam1 cam2 cam3 or cam4
+    stand_alone = true or false (false default, set to true if running on a RPi with the 7" official screen).
+    
+    mm_installed = true or false (false default, set to true if you have a working MagicMirror)
+
+    cam_screen_level = 0 - 250 (sets the default brightness of the camera feed, 130 default)
+    cam_screen_timer = 10 - 120 (sets the default amount of time the feed will play, 20 seconds default)
+    
+    clone1 = 192.192.192.195 (IP address) The key must start with 'clone' and each clone name must be unique.
+    clone2 = 192.192.192.196 The key could be anything after 'clone'. clone_Bedroom, clone_Kitchen, cloneLR, etc.
+    
+    feature_auto_start = 0 - 2 (0 = Off, 1 = PictureFrame, 2 = MagicMirror, 0 default)
+    feature_screen_level = 0 - 250 (sets the default brightness of the screen when running a feature, 130 default)
+
+    pic_frame_timer = 10 - 120 (sets the default time a picture displays in the PictureFrame feature, 60 seconds default)
+    pic_frame_folder = 1 - 21 (sets the default PictureFrame folder, 1 default)(Does not affect MagicMirror)
+
+    sound_on = true or false (default sound setting, false default)
+
+    triple_feed1 The camera to display in the main panel    << Only for a stand alone controller, will be ignored otherwise >>
+    triple_feed2 The camera to display in the top right panel
+    triple_feed3 The camera to display in the bottom right panel. Any of the 4 cams, cam1 cam2 cam3 or cam4
 
 After changing or adding any parameter(s) and saving, restart the node.
 
-After a restart, check the log for any errors. If you see a repeated connect disconnect, restart Polyglot to clear. There is a bug in Polyglot that may require you to re-fresh the page in order to see new log items.
+After a restart, check the log for any errors. If you see a repeated connect disconnect, restart Polyglot to clear. You may need to re-fresh the page in order to see new log items.
 
-### If you have any issues please visit the forums for assisance.
+# Clones
+
+You can add clones to PiCamMonitor. Each of the clones will mirror the master and do not require a node slot.
+
+Please go here for installation files and instructions:
+
+   https://github.com/markv58/PCM-UDI-Clone
+
+This is not available on the Nodeserver Store.
+
+#### If you have any issues or questions, please visit the forums for assisance.
+
+https://forum.universal-devices.com/topic/25817-polyglot-v2-picammonitor
 
 *I do not recommend the official Pi screen case. It was made wrong, the screen must be mounted upside down and requires a  configuration setting to flip the screen. This results in a terrible viewing angle.
 
 v1.2.4 Fixed some bugs, fixed install process.
+v2.0.0 
+* Clones can be added to expand the system without taking more node slots.
+* Runs on local Polyglot without screens to control add on clones.
+* MagicMirror2 can be used as a display Feature.
+* Self healing if clones get out of sync.
