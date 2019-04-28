@@ -349,7 +349,7 @@ class Controller(polyinterface.Controller):
             self.addNotice('Please delete pic_frame_auto from the custom parameters')
         
         if 'screen_connected' in self.polyConfig['customParams']:
-            self.addNotice('Please delete screen_connected from the custom parameters')
+            self.addNotice('Please delete screen_connected from the custom parameters. If you have updated from v1 please hit the Update Profile button and re-start the admin console.')
             
         if 'start_camera' in self.polyConfig['customParams']:
             self.addNotice('Please delete start_camera from the custom parameters')
