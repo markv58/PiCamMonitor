@@ -331,4 +331,4 @@ v2.0.0
 * MagicMirror2 can be used as a display Feature.
 * Self healing if clones get out of sync.
 
-v2.0.1 Fixed bug that would not allow sync process if a feature was not running.
+v2.0.1 Fixed bug that would not allow sync process if a feature was not running. Fixed name.
