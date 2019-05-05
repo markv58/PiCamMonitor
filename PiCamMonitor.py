@@ -69,7 +69,7 @@ PICTURE_FOLDERS = ['/home/pi/Pictures/Family',       #1
 class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
         super(Controller,self).__init__(polyglot)
-        self.name = 'PiCamMonitorTest'
+        self.name = 'PiCamMonitor'
         self.script = 0
         self.script_running = False    #setting all of the variables to their initial state
         self.timer_running = False
