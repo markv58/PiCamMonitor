@@ -31,7 +31,7 @@ If converting an existing PiCamMonitor to a clone see the section on Clones belo
 
 # Installation of PiCamMonitor:
 
-### If installing on a local Polyglot to clontrol clones, install from the NodeServer Store and skip to the Clones section below.
+### If installing on a local Polyglot or Polisy to clontrol clones only, install from the NodeServer Store and skip to the Clones section below.
 
 ### HARDWARE:
 
