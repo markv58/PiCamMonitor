@@ -766,14 +766,25 @@ class PingHelper(object):
         self.timeout = timeout
 
     def ping(self):
+        response = 0
         try:
-            response = os.system("ping -c 1 -W " + str(self.timeout) + " " + self.ip)
+            response,result = subprocess.getstatusoutput("ping -c1 -w2 " + self.ip)
+            #LOGGER.debug('first try')
+            #LOGGER.debug(response)
             if response == 0:
                 return response
-            else:
-                return None
         except:
-            # Capture any exception
+            return None
+        if response == 127:
+            try:
+                response = subprocess.call(['/sbin/ping','-c1','-W2', self.ip], shell=False)
+                #LOGGER.debug('second try')
+                #LOGGER.debug(response)
+                if response == 0:
+                    return response
+            except:
+                return None
+        else:
             return None
  
 class CloneNode(polyinterface.Node):
