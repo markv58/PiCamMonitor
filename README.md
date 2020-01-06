@@ -332,3 +332,5 @@ v2.0.0
 * Self healing if clones get out of sync.
 
 v2.0.1 Fixed bug that would not allow sync process if a feature was not running. Fixed name.
+
+v2.0.2 Compatible with Polisy
