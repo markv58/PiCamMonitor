@@ -651,18 +651,18 @@ class Controller(polyinterface.Controller):
             return False
       
     def shutDownPi(self,command):
-        LOGGER.info('Shutting down the Clones and Stand Alone Master')
+        LOGGER.info('Shutting down the Clones')
         self.setDriver('ST', 0)
         self.sendCloneCmd('shutDownPi')
-        time.sleep(10)
-        self.sendSelfCmd('shutDownPi')
+        #time.sleep(10)
+        #self.sendSelfCmd('shutDownPi')
     
     def piReboot(self,command):
-        LOGGER.info('Rebooting all Clones now and the Stand Alone Master in 10 seconds')
+        LOGGER.info('Rebooting all Clones now')
         self.setDriver('ST', 0) 
         self.sendCloneCmd('rebootPi')
-        time.sleep(10)
-        self.sendSelfCmd('rebootPi')
+        #time.sleep(10)
+        #self.sendSelfCmd('rebootPi')
     
     def autoCloneSync(self):
         if self.clones:
