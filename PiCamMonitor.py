@@ -407,6 +407,14 @@ class Controller(polyinterface.Controller):
             self.runTheFeed = True
             self.sendSelfCmd(CAM_SCRIPTS[self.script], self.cam1, self.cam2, self.cam3, self.cam4)
             self.sendCloneCmd(CLN_SCRIPTS[self.script])
+            
+        if self.script > 7:
+            _int = self.script - 2
+            int = str(_int)
+            feed = self.cam(int)
+            LOGGER.debug(feed)
+            self.runTheFeed = False
+            
         if self.runTheFeed:
             LOGGER.info('run the feed for %s', CLN_SCRIPTS[self.script])
             self.setDriver('GV1', 1)
