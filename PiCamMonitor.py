@@ -101,6 +101,22 @@ class Controller(polyinterface.Controller):
         self.cam2 = 'none'
         self.cam3 = 'none'
         self.cam4 = 'none'
+        self.cam5 = 'none'
+        self.cam6 = 'none'
+        self.cam7 = 'none'
+        self.cam8 = 'none'
+        self.cam9 = 'none'
+        self.cam10 = 'none'
+        self.cam11 = 'none'
+        self.cam12 = 'none'
+        self.cam13 = 'none'
+        self.cam14 = 'none'
+        self.cam15 = 'none'
+        self.cam16 = 'none'
+        self.cam17 = 'none'
+        self.cam18 = 'none'
+        self.cam19 = 'none'
+        self.cam20 = 'none'
         self.screenLevel = 130
         self.cam_screen_timer = 20
         self.picFrameAuto = 0   
@@ -408,11 +424,41 @@ class Controller(polyinterface.Controller):
             self.sendSelfCmd(CAM_SCRIPTS[self.script], self.cam1, self.cam2, self.cam3, self.cam4)
             self.sendCloneCmd(CLN_SCRIPTS[self.script])
             
-        if self.script > 7:
-            _int = self.script - 2
-            LOGGER.debug(_int)
-            int = str(_int)
-            feed = self.cam(_int)
+        elif self.script > 7:
+            if self.script == 8:
+                feed = self.cam5
+            elif self.script == 9:
+                feed = self.cam6
+            elif self.script == 10:
+                feed = self.cam7
+            elif self.script == 11:
+                feed = self.cam8
+            elif self.script == 12:
+                feed = self.cam9
+            elif self.script == 13:
+                feed = self.cam10
+            elif self.script == 14:
+                feed = self.cam11
+            elif self.script == 15:
+                feed = self.cam12
+            elif self.script == 16:
+                feed = self.cam13
+            elif self.script == 17:
+                feed = self.cam14
+            elif self.script == 18:
+                feed = self.cam15
+            elif self.script == 19:
+                feed = self.cam16
+            elif self.script == 20:
+                feed = self.cam17
+            elif self.script == 21:
+                feed = self.cam18
+            elif self.script == 22:
+                feed = self.cam19
+            elif self.script == 23:
+                feed = self.cam20
+
+
             LOGGER.debug(feed)
             self.runTheFeed = False
             
