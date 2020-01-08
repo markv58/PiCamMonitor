@@ -30,6 +30,22 @@ CAM_SCRIPTS = ['camera1', #1
                'cams2x2', #6
                'cams3x',  #7
                'cams4x'   #8
+               'camera1', #9
+               'camera1', #10
+               'camera1', #11
+               'camera1', #12
+               'camera1', #13
+               'camera1', #14
+               'camera1', #15
+               'camera1', #16
+               'camera1', #17
+               'camera1', #18
+               'camera1', #19
+               'camera1', #20
+               'camera1', #21
+               'camera1', #22
+               'camera1', #23
+               'camera1', #24
               ]
 
 CLN_SCRIPTS = ['camera1', #1
