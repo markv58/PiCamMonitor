@@ -5,7 +5,7 @@
     </editor>
     
     <editor id="script_num">
-        <range uom="25" subset="0-7" nls="SCRIPTS" />
+        <range uom="25" subset="0-23" nls="SCRIPTS" />
     </editor>
     
     <editor id="picframeauto_num">
