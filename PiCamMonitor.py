@@ -410,8 +410,9 @@ class Controller(polyinterface.Controller):
             
         if self.script > 7:
             _int = self.script - 2
+            LOGGER.debug(_int)
             int = str(_int)
-            feed = self.cam + int
+            feed = self.cam(_int)
             LOGGER.debug(feed)
             self.runTheFeed = False
             
