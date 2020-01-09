@@ -490,10 +490,11 @@ class Controller(polyinterface.Controller):
                 feed = self.cam19
             elif self.script == 23:
                 feed = self.cam20
-
-
-            LOGGER.debug(feed)
-            self.runTheFeed = False
+                
+            if feed != none:
+                self.runTheFeed = True
+            else:
+                self.runTheFeed = False
             
         if self.runTheFeed:
             LOGGER.info('run the feed for %s', CLN_SCRIPTS[self.script])
