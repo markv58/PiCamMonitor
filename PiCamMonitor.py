@@ -490,11 +490,12 @@ class Controller(polyinterface.Controller):
                 feed = self.cam19
             elif self.script == 23:
                 feed = self.cam20
-                
-            if feed != none:
+            if feed != 'none':
                 self.runTheFeed = True
+                self.sendSelfCmd(CAM_SCRIPTS[self.script], feed)
+                self.sendCloneCmd(CLN_SCRIPTS[self.script])
             else:
-                self.runTheFeed = False
+                LOGGER.error('No camera is listed in Configuration')
             
         if self.runTheFeed:
             LOGGER.info('run the feed for %s', CLN_SCRIPTS[self.script])
