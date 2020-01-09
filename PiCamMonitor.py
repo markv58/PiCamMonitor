@@ -540,12 +540,12 @@ class Controller(polyinterface.Controller):
             pass
         if not self.timer_running:  
             _script = int(command.get('value'))
-            if self.script == _script and self.script_running: # check if the cam script is already running
-                self.backlight_on()
-                self.screenOn_timer2()
-            else:                                              #switch to the new script
-                self.script = _script
-                self.setOn()
+            #if self.script == _script and self.script_running: # check if the cam script is already running
+            #    self.backlight_on()
+            #    self.screenOn_timer2()
+            #else:                                              #switch to the new script
+            self.script = _script
+            self.setOn()
         else:
             LOGGER.info('Still running another timer, skipping')
     
