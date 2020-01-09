@@ -208,7 +208,40 @@ class Controller(polyinterface.Controller):
                 self.addNode(CloneNode(self, self.address, nodeAddress, _address, 'PCM-' + key))
             else:
                 pass
- 
+              
+        if 'cam5' in self.polyConfig['customParams']:
+            self.cam5 = self.polyConfig['customParams']['cam5']
+        if 'cam6' in self.polyConfig['customParams']:
+            self.cam6 = self.polyConfig['customParams']['cam6']
+        if 'cam7' in self.polyConfig['customParams']:
+            self.cam7 = self.polyConfig['customParams']['cam7']
+        if 'cam8' in self.polyConfig['customParams']:
+            self.cam8 = self.polyConfig['customParams']['cam8']
+        if 'cam9' in self.polyConfig['customParams']:
+            self.cam9 = self.polyConfig['customParams']['cam9']
+        if 'cam10' in self.polyConfig['customParams']:
+            self.cam10 = self.polyConfig['customParams']['cam10']
+        if 'cam11' in self.polyConfig['customParams']:
+            self.cam11 = self.polyConfig['customParams']['cam11']
+        if 'cam12' in self.polyConfig['customParams']:
+            self.cam12 = self.polyConfig['customParams']['cam12']
+        if 'cam13' in self.polyConfig['customParams']:
+            self.cam13 = self.polyConfig['customParams']['ca13']
+        if 'cam14' in self.polyConfig['customParams']:
+            self.cam14 = self.polyConfig['customParams']['cam14']
+        if 'cam15' in self.polyConfig['customParams']:
+            self.cam15 = self.polyConfig['customParams']['cam15']
+        if 'cam16' in self.polyConfig['customParams']:
+            self.cam16 = self.polyConfig['customParams']['cam16']
+        if 'cam17' in self.polyConfig['customParams']:
+            self.cam17 = self.polyConfig['customParams']['cam17']
+        if 'cam18' in self.polyConfig['customParams']:
+            self.cam18 = self.polyConfig['customParams']['cam18']
+        if 'cam19' in self.polyConfig['customParams']:
+            self.cam19 = self.polyConfig['customParams']['cam19']
+        if 'cam20' in self.polyConfig['customParams']:
+            self.cam20 = self.polyConfig['customParams']['cam20']            
+                        
         if 'stand_alone' in self.polyConfig['customParams']:
             _input = self.polyConfig['customParams']['stand_alone']
             if _input == 'true':
