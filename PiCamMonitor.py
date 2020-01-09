@@ -62,7 +62,16 @@ CLN_SCRIPTS = ['camera1', #1
                'camera8', #12
                'camera9', #13
                'camera10', #14
-               
+               'camera11', #15
+               'camera12', #16
+               'camera13', #17
+               'camera14', #18
+               'camera15', #19
+               'camera16', #20
+               'camera17', #21
+               'camera18', #22
+               'camera19', #23
+               'camera20', #24
                
                
               ]
@@ -235,7 +244,7 @@ class Controller(polyinterface.Controller):
         if 'cam12' in self.polyConfig['customParams']:
             self.cam12 = self.polyConfig['customParams']['cam12']
         if 'cam13' in self.polyConfig['customParams']:
-            self.cam13 = self.polyConfig['customParams']['ca13']
+            self.cam13 = self.polyConfig['customParams']['cam13']
         if 'cam14' in self.polyConfig['customParams']:
             self.cam14 = self.polyConfig['customParams']['cam14']
         if 'cam15' in self.polyConfig['customParams']:
