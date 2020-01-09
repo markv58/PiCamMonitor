@@ -606,7 +606,7 @@ class Controller(polyinterface.Controller):
             self.sendCloneCmd(str(self.pfscreenLevel))
             self.backlight_on() 
         elif self.picFrameAuto == 0:
-            pass
+            self.stopCamFeed()
     
     def picFrameAuto(self, command = None): # triggered by the Optional Feature drop down
         _auto = int(command.get('value'))
