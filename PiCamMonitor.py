@@ -55,7 +55,16 @@ CLN_SCRIPTS = ['camera1', #1
                'cams2x1', #5
                'cams2x2', #6
                'cams3x',  #7
-               'cams4x'   #8
+               'cams4x',  #8
+               'camera5', #9
+               'camera6', #10              
+               'camera7', #11
+               'camera8', #12
+               'camera9', #13
+               'camera10', #14
+               
+               
+               
               ]
 
 # list of args to pass to pictureFrame - Do Not Alter
