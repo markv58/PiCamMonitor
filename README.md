@@ -262,6 +262,11 @@ You can search the web for the settings to reach your particular camera.
 
 You can stream your cameras from BlueIris. Please see the BI help files for additional settings information.
 
+The path to your streams:
+
+    http://user:password@xxx.xxx.xxx.xxx:port/mjpg/shortName\&stream=2
+    
+
 #### Test your camera feed paths on the Pi using this command line edited with your information:
 
     sh -c 'omxplayer --win "0 0 800 480" rtsp://USERNAME:PWORD@172.16.2.110:554/cam/realmonitor?channel=1\&subtype=1; exec bash'
