@@ -71,7 +71,7 @@ CLN_SCRIPTS = ['camera1', #1
                'camera17', #21
                'camera18', #22
                'camera19', #23
-               'camera20', #24
+               'camera20'  #24
                
                
               ]
