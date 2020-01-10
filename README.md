@@ -345,3 +345,5 @@ v2.0.1 Fixed bug that would not allow sync process if a feature was not running.
 v2.0.2 Compatible with Polisy
 
 v2.0.3 Bugs fixed and preperation for future enhancements
+
+v2.0.4 Bug fix that caused crash when running 4x feed
