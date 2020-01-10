@@ -45,7 +45,7 @@ CAM_SCRIPTS = ['camera1', #1
                'camera1', #21
                'camera1', #22
                'camera1', #23
-               'camera1', #24
+               'camera1'  #24
               ]
 
 CLN_SCRIPTS = ['camera1', #1
