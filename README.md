@@ -258,6 +258,10 @@ A typical path to the main stream on lower end camera such as a Foscam C1.
 
 You can search the web for the settings to reach your particular camera.
 
+#### BlueIris Users:
+
+You can stream your cameras from BlueIris. Please see the BI help files for additional settings information.
+
 #### Test your camera feed paths on the Pi using this command line edited with your information:
 
     sh -c 'omxplayer --win "0 0 800 480" rtsp://USERNAME:PWORD@172.16.2.110:554/cam/realmonitor?channel=1\&subtype=1; exec bash'
@@ -334,3 +338,5 @@ v2.0.0
 v2.0.1 Fixed bug that would not allow sync process if a feature was not running. Fixed name.
 
 v2.0.2 Compatible with Polisy
+
+v2.0.3 Bugs fixed and preperation for future enhancements
