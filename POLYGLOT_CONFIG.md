@@ -10,7 +10,7 @@ If you are running BlueIris software, you can get your streams from there:
     Key.       Value
     cam1       http://user:password@192.192.192.192:1234/mjpg/Cam1/video.mjpg\&stream=2
     
-On BlueIris you can set the stream preferences.See BI help section.   
+On BlueIris you can set the stream preferences. See BI help section.   
     
 If you have no cam(#) the value must be 'none'. Fill the camera paths from 1 to 4 for the best results. A single or multi camera feed will not play if there is no camera for the feed.
 
