@@ -1,10 +1,12 @@
 #### cam1, cam2, cam3 and cam4 must be in the custom configuration parameters to use the multi cam feeds.
 
 A typical path to a camera feed:
+
     Key        Value
     cam1       rtsp://user:password@192.192.192.195:544/cam/realmonitor?chanel=1\&subtype=1
     
 If you are running BlueIris software, you can get you streams for there:
+
     Key.       Value
     cam1       http://user:password@192.192.192.192:1234/mjpg/Cam1/video.mjpg\&stream=2
     
