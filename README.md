@@ -48,7 +48,7 @@ If converting an existing PiCamMonitor to a clone see the section on Clones belo
 
 Assemble the Smarti Pi case, screen and raspberry pi, instructions and video here - https://smarticase.com/products/smartipi-touch .
 
-Download the full version of Raspbian Stretch with Desktop and recommended software found here - https://www.raspberrypi.org/downloads/raspbian/ .
+Download the full version of Raspbian Buster with Desktop foundnd here - https://www.raspberrypi.org/downloads/raspbian/ .
 Extract the files.
 
 Using Etcher (Mac) https://www.balena.io/etcher/ , or
@@ -131,7 +131,7 @@ then hit enter.
 
 Once all the files are installed and you are back to the prompt it's time to run the screen saver and set it to disable.
 Go to the desktop select the raspberry/Preferences/Screensaver and set the mode to Disable Screen Saver and close the window. You may be asked to start the service. Now the screen should stay on like we want.
-
+cd 
 ### Samba
 
 Set up Samba so you can transfer your pictures, in the terminal enter
