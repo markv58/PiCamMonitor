@@ -131,7 +131,7 @@ then hit enter.
 
 Once all the files are installed and you are back to the prompt it's time to run the screen saver and set it to disable.
 Go to the desktop select the raspberry/Preferences/Screensaver and set the mode to Disable Screen Saver and close the window. You may be asked to start the service. Now the screen should stay on like we want.
-cd 
+
 ### Samba
 
 Set up Samba so you can transfer your pictures, in the terminal enter
