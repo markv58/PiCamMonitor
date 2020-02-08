@@ -48,7 +48,7 @@ If converting an existing PiCamMonitor to a clone see the section on Clones belo
 
 Assemble the Smarti Pi case, screen and raspberry pi, instructions and video here - https://smarticase.com/products/smartipi-touch .
 
-Download the full version of Raspbian Buster with Desktop foundnd here - https://www.raspberrypi.org/downloads/raspbian/ .
+Download the full version of Raspbian Buster with Desktop found here - https://www.raspberrypi.org/downloads/raspbian/ .
 Extract the files.
 
 Using Etcher (Mac) https://www.balena.io/etcher/ , or
