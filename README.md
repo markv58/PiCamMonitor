@@ -41,7 +41,7 @@ If converting an existing PiCamMonitor to a clone see the section on Clones belo
 * Official Raspberry Pi 7" touch screen 
 * SmartiPi Touch Case* - https://smarticase.com available on Amazon.com
 
-### OPTIONAL:
+### OPTIONAL Hardware:
 
 * Piezo buzzer - https://www.amazon.com/Cylewet-Mainboard-Computer-Internal-Speaker/dp/B01MR1A4NV/ref=sr_1_1_sspa?s=electronics&ie=UTF8&qid=1550533551&sr=1-1-spons&keywords=piezo+buzzer&psc=1 I realize there are 10, but they are cheap and once you get one of these running, you may just want a few more. This connects to GPIO pins 9 thru 15 with the black wire on pin 9. https://pinout.xyz
 * Heatsinks - 
