@@ -35,8 +35,8 @@ If converting an existing PiCamMonitor to a clone see the section on Clones belo
 
 ### HARDWARE:
 
-* Raspberry Pi 3 B+
-* 5.2 vdc 3 amp power supply, I've found the 2.5 amp to be too weak to power the Pi and screen.
+* Raspberry Pi 3 B+ or 4
+* 5.2 vdc 3 amp power supply for the 3 B+ or a 5.1 vdc 3 amp USB-C for the 4.
 * 16 - 32 GB micro sd card
 * Official Raspberry Pi 7" touch screen 
 * SmartiPi Touch Case* - https://smarticase.com available on Amazon.com
