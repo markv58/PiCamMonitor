@@ -193,7 +193,7 @@ Execute the following one at a time:
 ⚠️ Important!
 
 The installation step for npm install will take a few minutes, often with little or no terminal response! 
-Do not interrupt or you risk getting a jam.
+Do not interrupt or you risk locking up the system.
 
     cd modules
     git clone https://github.com/darickc/MMM-BackgroundSlideshow.git
