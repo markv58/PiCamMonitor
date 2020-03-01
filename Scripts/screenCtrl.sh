@@ -63,6 +63,9 @@ case "$1" in
   pictureFrame)
     DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D "$2" "$3"
     ;;
+  sb)
+    DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -Z -F -Y /home/pi/.polyglot/nodeservers/PiCamMonitor/Images/blank.png
+    ;;    
   on)
     echo 0 | sudo tee /sys/class/backlight/rpi_backlight/bl_power
     ;;
