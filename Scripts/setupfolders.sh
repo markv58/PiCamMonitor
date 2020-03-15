@@ -28,7 +28,7 @@ case "$1" in # this is for the normal first install of PictureFrame folders and 
       mkdir /home/pi/Pictures/User2
       mkdir /home/pi/Pictures/User3
       mkdir /home/pi/Pictures/User4
-      find /home/pi/Pictures -type d -exec cp -n /home/pi/PCM-UDI-Clone/sample.jpg {} \;
+      find /home/pi/Pictures -type d -exec cp -n /home/pi/.polyglot/nodeservers/PiCamMonitor/Images/sample.jpg {} \;
     else
       echo "Folders are already set up"
     fi
@@ -56,7 +56,7 @@ case "$1" in # this is for the normal first install of PictureFrame folders and 
     mkdir /home/pi/Pictures/User2
     mkdir /home/pi/Pictures/User3
     mkdir /home/pi/Pictures/User4
-    find /home/pi/Pictures -type d -exec cp -n /home/pi/PCM-UDI-Clone/sample.jpg {} \;
+    find /home/pi/Pictures -type d -exec cp -n /home/pi/.polyglot/nodeservers/PiCamMonitor/Images/sample.jpg {} \;
     ;;  
 *)
 exit 1
