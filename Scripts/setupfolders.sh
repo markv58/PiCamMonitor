@@ -5,6 +5,11 @@
 case "$1" in # this is for the normal first install of PictureFrame folders and sample.jpg
   normal)
     git config core.filemode false
+    cmd_output=$(unam -o)
+    if [ "$cmd_outut" == "FreeBSD" ]; then
+      echo "Can't install on this system"
+      exit
+    fi
     if [ ! -d "/home/pi/Pictures/Family" ]; then
       echo "Setting up the folders"
       mkdir /home/pi/Pictures/Family
