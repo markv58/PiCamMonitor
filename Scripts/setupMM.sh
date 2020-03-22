@@ -2,6 +2,11 @@
 
 case "$1" in
   normal)
+    cmd_output=$(unam -o)
+    if [ "$cmd_outut" == "FreeBSD" ]; then
+      echo "Can't install on this system"
+      exit
+    fi
     if [ ! -d "/home/pi/MagicMirror" ]; then
       echo "MagicMirror2 is not installed"
       exit
