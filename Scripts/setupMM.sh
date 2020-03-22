@@ -2,8 +2,8 @@
 
 case "$1" in
   normal)
-    cmd_output=$(unam -o)
-    if [ "$cmd_outut" == "FreeBSD" ]; then
+    cmd_output=$(uname -o)
+    if [ "$cmd_output" == "FreeBSD" ]; then
       echo "Can't install on this system"
       exit
     fi
