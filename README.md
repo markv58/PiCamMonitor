@@ -1,5 +1,7 @@
 # PiCamMonitor
 
+#### v2.3.0 - Another Major, Major update. To be released very soon
+
 #### v2 - This is a major update, please read the Upgrade section below.
 
 This is a Polyglot Nodeserver for UDI Isy that can run either as a controller on your local Polyglot to control clones or on a Raspberry Pi 3 B+ or 4 with the official 7" RPi touch screen in a SmartiPi Touch case. Running in stand alone mode gives you another instance of a Polyglot Nodeserver that you can install nodes onto such as the Presence-Poly.
@@ -16,6 +18,11 @@ An option to use MagicMirror2 for the display has been added. This will display 
 Clones must have the same options installed as the Controller if running in stand alone mode.  
 
 The Short poll checks if the Clones are online and synchronized. If there is a problem with a clone the system will re-sync automatically.
+
+## Upgrade from v2.04 to 2.3.0
+
+Programs will be affected because the camera feeds from 2.0.3 have moved to the bottom of the list.
+Sounds can be played through HDMI or the phone jack. A sound card can be added.
 
 ## Upgrade from v1.2.2
 
@@ -43,6 +50,7 @@ If converting an existing PiCamMonitor to a clone see the section on Clones belo
 
 ### OPTIONAL Hardware:
 
+* Sound card - https://www.amazon.com/gp/product/B07B3WYMN8/ref=ppx_yo_dt_b_asin_title_o05_s00?ie=UTF8&psc=1
 * Piezo buzzer - https://www.amazon.com/Cylewet-Mainboard-Computer-Internal-Speaker/dp/B01MR1A4NV/ref=sr_1_1_sspa?s=electronics&ie=UTF8&qid=1550533551&sr=1-1-spons&keywords=piezo+buzzer&psc=1 I realize there are 10, but they are cheap and once you get one of these running, you may just want a few more. This connects to GPIO pins 9 thru 15 with the black wire on pin 9. https://pinout.xyz
 * Heatsinks - 
 
@@ -347,3 +355,5 @@ v2.0.2 Compatible with Polisy
 v2.0.3 Bugs fixed and preperation for future enhancements
 
 v2.0.4 Bug fix that caused crash when running 4x feed
+
+v2.3.0 Major update allows for any type of screen to be used with the master and clones with some limitations. Screen brightnes can't be controled on generic screen by PCM. There are more cameras allowed and Blue Iris group feeds are recommended. This version has a collection of custom sounds to announce alerts and a camera hold option to remain on a feed for an unlimited amount of time.
