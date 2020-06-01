@@ -2,7 +2,7 @@
 
 #### v2 - This is a major update, please read the Upgrade section below.
 
-This is a Polyglot Nodeserver for UDI Isy that can run either as a controller on your local Polyglot to control clones or on a Raspberry Pi 3 B+ with the official 7" RPi touch screen in a SmartiPi Touch case. Running in stand alone mode gives you another instance of a Polyglot Nodeserver that you can install nodes onto such as the Presence-Poly.
+This is a Polyglot Nodeserver for UDI Isy that can run either as a controller on your local Polyglot to control clones or on a Raspberry Pi 3 B+ or 4 with the official 7" RPi touch screen in a SmartiPi Touch case. Running in stand alone mode gives you another instance of a Polyglot Nodeserver that you can install nodes onto such as the Presence-Poly.
 
 This will display your ip surveillance camera feeds in a single or multiple feed configuration on the RPi. Feeds can be displayed using ISY events, Blue Iris alerts, maually or with smart home devices such as Alexa through the ISY portal.
 
