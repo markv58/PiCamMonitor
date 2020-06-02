@@ -1,0 +1,397 @@
+
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides: omxplayer
+### END INIT INFO
+# For PCM v2.3.x
+
+
+# --- Enter your cam feeds here and / or copy from CloneCtrl2b.sh ---
+# --- These must match your cam feeds in your Master Custom Configuration Parameters
+
+cam1='none'
+cam2='none'
+cam3='none'
+cam4='none'
+cam5='none'
+cam6='none'
+cam7='none'
+cam8='none'
+cam9='none'
+cam10='none'
+cam11='none'
+cam12='none'
+cam13='none'
+cam14='none'
+cam15='none'
+cam16='none'
+cam17='none'
+cam18='none'
+cam19='none'
+cam20='none'
+cam21='none'
+cam22='none'
+cam23='none'
+cam24='none'
+cam25='none'
+cam26='none'
+cam27='none'
+cam28='none'
+cam29='none'
+cam30='none'
+
+PFtime=60        # --- Match to your pic_frame_timer setting in the Configuration page of the Master ---
+
+
+#---------           Edit the values below carefuly to adjust screen size if you are not using the    --------------
+#                    official Raspberry Pi 7" screen
+#
+#                          The horizontal is always the first location
+#                              followed by the vertical location
+#
+#                   tlh ->                  <- clh ->
+#                   ------------------------------------------------------
+#               tlv |                           |                         |
+#                   |                           |                         |
+#                   |                           |                         |
+#   Full Screen     |                           |                         |
+#       and         |------------------------- clv -----------------------|
+#   Quad Screen     |                           |                         |
+#                   |                           |                         |
+#                   |                           |                         |
+#                   |                           |                         | brv
+#                    ------------------------------------------------------
+#                                                                       brh
+#
+#                    -----------------------------------------------------
+#                   |                                 |C__________________|
+#                   |A________________________________|E                  |
+#                   |B                                |     Top Right     |
+#                   |                                 |                   |
+#   Triple Feed     |          Main Screen            |C_________________F|  Locations are prefixed with 'triple' below
+#                   |                                 |G                 G|
+#                   |________________________________D|    Bottom Right   |
+#                   |                                C|                   |
+#                   |                                 |__________________F|
+#                    ----------------------------------------------------H
+#
+#                    -----------------------------------------------------
+#                   |                           |                         |
+#                   |A__________________________|C________________________|
+#                   |B                          |B                        |
+#                   |                           |                         |
+#   Double Feed     |          Left Screen      |      Right Screen       |  Locations are prefixed with 'double' below
+#                   |                           |                         |
+#                   |__________________________C|________________________F|
+#                   |                          D|                        D|
+#                   |                           |                         |
+#                    -----------------------------------------------------
+
+
+#----------Full screen and Quad
+
+tlh=0      # top left horizonal
+tlv=0      # top left vertical
+brh=1920    # bottom right horizonal
+brv=1080    # bottom right vertical
+
+clh=960    # center left horizonal
+clv=540    # center left vertical
+
+#----------Triple screen
+
+tripleA=0
+tripleB=180
+tripleC=1280
+tripleD=900
+tripleE=180
+tripleF=1920
+tripleG=540
+tripleH=900
+
+#----------Double screens
+
+doubleA=0
+doubleB=270
+doubleC=960
+doubleD=810
+doubleE=400
+doubleF=1920
+
+# ---------Use caution when editing below this line - There should be no reason to edit below ----------------------------
+
+# Assign cameras
+
+case "$1" in
+  cams4x)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$clh' '$clv'" '$cam1' -b --live; exec bash'
+    screen -dmS stream3 sh -c 'omxplayer --win "'$clh' '$tlv' '$brh' '$clv'" '$cam2' --live; exec bash'
+    screen -dmS stream4 sh -c 'omxplayer --win "'$tlh' '$clv' '$clh' '$brv'" '$cam3' --live; exec bash'
+    screen -dmS stream5 sh -c 'omxplayer --win "'$clh' '$clv' '$brh' '$brv'" '$cam4' --live; exec bash'
+    ;;
+  cams3x)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tripleA' '$tripleB' '$tripleC' '$tripleD'" '$cam2' -b --live; exec bash'
+    screen -dmS stream3 sh -c 'omxplayer --win "'$tripleC' '$tripleE' '$tripleF' '$tripleG'" '$cam1' --live; exec bash'
+    screen -dmS stream4 sh -c 'omxplayer --win "'$tripleC' '$tripleG' '$tripleF' '$tripleH'" '$cam3' --live; exec bash'
+    ;;
+   cams2x1)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$doubleA' '$doubleB' '$doubleC' '$doubleD'" '$cam1' -b --live; exec bash'
+    screen -dmS stream3 sh -c 'omxplayer --win "'$doubleC' '$doubleB' '$doubleF' '$doubleD'" '$cam2' --live; exec bash'
+    ;;
+  cams2x2)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$doubleA' '$doubleB' '$doubleC' '$doubleD'" '$cam3' -b --live; exec bash'
+    screen -dmS stream3 sh -c 'omxplayer --win "'$doubleC' '$doubleB' '$doubleF' '$doubleD'" '$cam4' --live; exec bash'
+    ;;
+  camera1)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam1' -b --live; exec bash'
+    ;;
+  camera2)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam2' -b --live; exec bash'
+    ;;
+  camera3)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam3' -b --live; exec bash'
+    ;;
+  camera4)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam4' -b --live; exec bash'
+    ;;
+  camera5)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam5' -b --live; exec bash'
+    ;;
+  camera6)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam6' -b --live; exec bash'
+    ;;
+  camera7)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam7' -b --live; exec bash'
+    ;;
+  camera8)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam8' -b --live; exec bash'
+    ;;
+  camera9)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam9' -b --live; exec bash'
+    ;;
+  camera10)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam10' -b --live; exec bash'
+    ;;
+  camera11)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam11' -b --live; exec bash'
+    ;;
+  camera12)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam12' -b --live; exec bash'
+    ;;
+  camera13)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam13' -b --live; exec bash'
+    ;;
+  camera14)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam14' -b --live; exec bash'
+    ;;
+  camera15)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam15' -b --live; exec bash'
+    ;;
+  camera16)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam16' -b --live; exec bash'
+    ;;
+  camera17)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam17' -b --live; exec bash'
+    ;;
+  camera18)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam18' -b --live; exec bash'
+    ;;
+  camera19)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam19' -b --live; exec bash'
+    ;;
+  camera20)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam20' -b --live; exec bash'
+    ;;
+  camera21)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam21' -b --live; exec bash'
+    ;;
+  camera22)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam22' -b --live; exec bash'
+    ;;
+  camera23)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam23' -b --live; exec bash'
+    ;;
+  camera24)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam24' -b --live; exec bash'
+    ;;
+  camera25)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam25' -b --live; exec bash'
+    ;;
+  camera26)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam26' -b --live; exec bash'
+    ;;
+  camera27)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam27' -b --live; exec bash'
+    ;;
+  camera28)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam28' -b --live; exec bash'
+    ;;
+  camera29)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam29' -b --live; exec bash'
+    ;;
+  camera30)
+    screen -dmS stream2 sh -c 'omxplayer --win "'$tlh' '$tlv' '$brh' '$brv'" '$cam30' -b --live; exec bash'
+    ;;
+  pf0)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf1)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf2)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf3)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf4)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf5)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf6)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf7)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf8)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf9)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf10)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf11)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf12)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf13)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf14)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf15)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf16)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf17)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf18)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf19)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  pf20)
+    screen -dmS stream1 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D '$PFtim$
+    ;;
+  sb)
+    screen -dmS stream10 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -Z -F -Y /home/pi/Pictures/blan$
+    ;;
+  pictureFrame)
+    screen "$2" "$3" "$4" sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -p -z -Z -F -R  60 -Y -D "$3" $
+    ;;
+  on)
+    screen -X -S stream10 quit
+    ;;
+  off)
+    screen -dmS stream10 sh -c 'DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -Z -F -Y /home/pi/Pictures/blan$
+    ;;
+  sbkill)
+    screen -X -S stream10 quit
+    ;;
+  pkill)
+    screen -X -S stream1 quit
+    ;;
+  omxkill)
+    screen -X -S stream2 quit
+    screen -X -S stream3 quit
+    screen -X -S stream4 quit
+    screen -X -S stream5 quit
+    ;;
+  killall)
+    killall screen -q
+    ;;
+  shutDownPi)
+    sudo shutdown -h now
+    ;;
+  rebootPi)
+    sudo reboot
+    ;;
+  MMstart)
+    cd ~/MagicMirror
+    screen -dmS stream1 sh -c 'DISPLAY=:0 npm start; exec bash'
+    ;;
+  unclutter)
+    unclutter -display :0 -idle 3 -root -noevents
+    ;;
+  playsound)
+    sh -c '2tone'
+    ;;
+  sound2)
+    aplay -q /home/pi/Sounds/sound2.wav &
+    ;;
+  sound3)
+    aplay -q /home/pi/Sounds/sound3.wav &
+    ;;
+  sound4)
+    aplay -q /home/pi/Sounds/sound4.wav &
+    ;;
+  sound5)
+    aplay -q /home/pi/Sounds/sound5.wav &
+    ;;
+  sound6)
+    aplay -q /home/pi/Sounds/sound6.wav &
+    ;;
+  sound7)
+    aplay -q /home/pi/Sounds/sound7.wav &
+    ;;
+  sound8)
+    aplay -q /home/pi/Sounds/sound8.wav &
+    ;;
+  sound9)
+    aplay -q /home/pi/Sounds/sound9.wav &
+    ;;
+  sound10)
+    aplay -q /home/pi/Sounds/sound10.wav &
+    ;;
+  sound11)
+    aplay -q /home/pi/Sounds/sound11.wav &
+    ;;
+  sound12)
+    aplay -q /home/pi/Sounds/sound12.wav &
+    ;;
+  sound13)
+    aplay -q /home/pi/Sounds/sound13.wav &
+    ;;
+  sound14)
+    aplay -q /home/pi/Sounds/sound14.wav &
+    ;;
+  sound15)
+    aplay -q /home/pi/Sounds/sound15.wav &
+    ;;
+  sound16)
+    aplay -q /home/pi/Sounds/sound16.wav &
+    ;;
+  sound17)
+    aplay -q /home/pi/Sounds/sound17.wav &
+    ;;
+  ''|*[0-9]*)
+    exit
+    ;;
+
+*)
+exit 1
+;;
+
+esac
