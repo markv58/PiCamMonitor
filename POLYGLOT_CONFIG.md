@@ -10,6 +10,8 @@ If you are running BlueIris software, you can get your streams from there:
     Key.       Value
     cam1       http://user:password@192.192.192.192:1234/mjpg/Cam1/video.mjpg\&stream=2
     
+    bi_group1  http://user:password@192.192.192.192:1234/mjpg/@outside\&stream=2
+    
 On BlueIris you can set the stream preferences. See BI help section.
 
 - Cams 1+2 plays cam1 and cam2 in 2 equal size windows
