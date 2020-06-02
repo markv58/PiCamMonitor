@@ -1,4 +1,4 @@
-#### cam1, cam2, cam3 and cam4 must be in the custom configuration parameters to use the multi cam feeds.
+#### cam1, cam2, cam3 and cam4 must be in the custom configuration parameters to use the multi cam feeds.(Cams 1+2, Cams 2+4, etc)
 
 A typical path to a camera feed:
 
