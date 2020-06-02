@@ -3,19 +3,19 @@
     <editor id="bool">
         <range uom="2" subset="0,1" />
     </editor>
-    
+
     <editor id="script_num">
-        <range uom="25" subset="0-23" nls="SCRIPTS" />
+        <range uom="25" subset="0-33" nls="SCRIPTS" />
     </editor>
-    
+
     <editor id="picframeauto_num">
-        <range uom="25" subset="0-2" nls="PICFRAME" />
+        <range uom="25" subset="0-3" nls="PICFRAME" />
     </editor>
-    
+
     <editor id="folder_num">
         <range uom="25" subset="0-20" nls="FOLDER" />
     </editor>
-    
+
     <editor id="count">
       <range uom="56" min="10" max="120" prec="0" step="5"/>
     </editor>
@@ -23,5 +23,13 @@
     <editor id="level">
       <range uom="56" min="0" max="250" prec="0" step="5"/>
     </editor>
-    
+
+    <editor id="sound">
+      <range uom="25" subset="0-17" nls="SOUND" />
+    </editor>
+
+    <editor id="logging_level">
+      <range uom="25" subset="0-2" nls="LOGGINGLEVEL" />
+    </editor>
+
 </editors>
