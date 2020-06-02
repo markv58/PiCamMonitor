@@ -1,6 +1,10 @@
 # PiCamMonitor
 
-#### v2.3.0 - Another Major, Major update. To be released very soon
+#### v2.3.0 - Another Major, Major update.
+
+You must check you configuration and update for proper operation. Clones must be updated also and cam feed information copied to or entered there.
+
+After the update hit the Update Profile then restart the admin console to ensure you can access all features.
 
 #### v2 - This is a major update, please read the Upgrade section below.
 
