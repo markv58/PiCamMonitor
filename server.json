@@ -4,7 +4,7 @@
     "type": "python3",
     "executable": "PiCamMonitor.py",
     "install": "install.sh",
-    "description": "Display single or multiple security ip camera feeds on a Raspberry Pi with 7inch screen when triggered by an ISY event.",
+    "description": "Display single or multiple security ip camera feeds on any display when triggered by an ISY event.",
     "notice": "Use at your own risk",
     "shortPoll": "60",
     "longPoll": "240",
@@ -12,7 +12,7 @@
         {
             "title": "PiCamMonitor",
             "author": "Mark Vittes (markv58)",
-            "version": "2.0.4",
+            "version": "2.3.0",
             "date": "April 26, 2019",
             "source": "https://github.com/markv58/PiCamMonitor",
             "license": "https://raw.githubusercontent.com/markv58/PiCamMonitor/master/LICENSE"
