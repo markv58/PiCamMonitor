@@ -1,3 +1,4 @@
+
 <nodeDefs>
     <!-- NODE DEF from 5.0 document http://wiki.universal-devices.com/index.php?title=V50_MAIN -->
     <!-- controller -->
@@ -13,13 +14,14 @@
               <st id="GV6" editor="bool" />
               <st id="GV7" editor="count" />
               <st id="GV8" editor="level" />
-              <st id="GV9" editor="bool" />
+              <st id="GV9" editor="sound" />
               <st id="GV12" editor="picframeauto_num" />
-              <st id="GV11" editor="folder_num" /> 
+              <st id="GV11" editor="folder_num" />
+              <st id="GV13" editor="logging_level" />
             </sts>
         <cmds>
             <sends />
-            <accepts>	   
+            <accepts>
               <cmd id="BACKLIGHT_ON" />
               <cmd id="BACKLIGHT_OFF" />
               <cmd id="QUERY" />
@@ -36,19 +38,36 @@
               </cmd>
               <cmd id="SCREENBRIGHTNESS">
                 <p id="" editor="level" init="GV5" />
-              </cmd> 
+              </cmd>
               <cmd id="PIC_FRAME_AUTO">
                 <p id="" editor="picframeauto_num" init="GV12" />
               </cmd>
               <cmd id="FOLDER">
                 <p id="" editor="folder_num" init="GV11" />
-              </cmd> 
+              </cmd>
               <cmd id="PFSCREENBRIGHTNESS">
                 <p id="" editor="level" init="GV8" />
               </cmd> 
-              <cmd id="SOUND_ON">
-                <p id="" editor="bool" init="GV9" />
-              </cmd> 
+              <cmd id="SOUND">
+                <p id="" editor="sound" init="GV9" />
+              </cmd>
+              <cmd id="LOGGINGLEVEL">
+                <p id="" editor="logging_level" init="GV13" />
+              </cmd>
+
+              <cmd id="CAMFEED">
+                <p id="F" editor="script_num" init="GV2"/>
+                <p id="T" editor="count" init="GV4"/>
+                <p id="S" editor="sound" init="GV9"/>
+                <p id="L" editor="level" init="GV5"/>
+              </cmd>
+
+              <cmd id="DISPLAY">
+                <p id="OF" editor="picframeauto_num" init="GV12"/>
+                <p id="FL" editor="level" init="GV8"/>
+                <p id="SC" editor="bool" init="GV3"/>
+                <p id="S" editor="sound" init="GV9"/>
+              </cmd>
             </accepts>
         </cmds>
     </nodeDef>
@@ -57,13 +76,14 @@
         <editors />
             <sts>
               <st id="ST" editor="bool" />
-              <st id="GV0" editor="bool" />
+              <st id="GV1" editor="bool" />
         </sts>
         <cmds>
             <sends />
-            <accepts>	   
+            <accepts>
             <cmd id="SHUT_DOWN" />
             <cmd id="REBOOT_PI" />
+            <cmd id="QUERY" />
             </accepts>
         </cmds>        
     </nodeDef>     
