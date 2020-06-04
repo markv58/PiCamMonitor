@@ -142,10 +142,10 @@ SOUNDS = ['sound0',      # 0 off
           'sound11.wav',  # 11 error
           'sound12.wav',  # 12 buzzer
           'sound13.wav',  # 13 smoke alarm
-          'sound14.wav',  # 14 custon1
-          'sound15.wav',  # 15 custon2
-          'sound16.wav',  # 16 custon3
-          'sound17.wav',  # 17 custon4
+          'sound14.wav',  # 14 custom1
+          'sound15.wav',  # 15 custom2
+          'sound16.wav',  # 16 custom3
+          'sound17.wav',  # 17 custom4
          ]
 
 
