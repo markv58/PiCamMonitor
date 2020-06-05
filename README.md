@@ -344,6 +344,8 @@ https://forum.universal-devices.com/topic/25817-polyglot-v2-picammonitor
 
 *I do not recommend the official Pi screen case. It was made wrong, the screen must be mounted upside down and requires a  configuration setting to flip the screen. This results in a terrible viewing angle.
 
+#### Update info
+
 v1.2.4 Fixed some bugs, fixed install process.
 
 v2.0.0 
