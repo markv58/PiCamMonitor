@@ -6,8 +6,8 @@
     "install": "install.sh",
     "description": "Display single or multiple security ip camera feeds on any display when triggered by an ISY event.",
     "notice": "Use at your own risk",
-    "shortPoll": "60",
-    "longPoll": "240",
+    "shortPoll": "300",
+    "longPoll": "500",
     "credits": [
         {
             "title": "PiCamMonitor",
