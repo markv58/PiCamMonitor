@@ -243,24 +243,22 @@ class Controller(polyinterface.Controller):
         LOGGER.info('Instructions for updating clones are here: https://github.com/markv58/PCM-UDI-Clone')
 
     def shortPoll(self):
-        pass
-
-        #if self.script_running: # Skip the short poll while a camera feed is displayed
-        #    pass
-        #else:
-        #    self.clonesInSync = True
-        #    for node in self.nodes:
-        #        self.nodes[node].update()
-        #        _sync = self.nodes[node].getSync()
-        #        _online = self.nodes[node].getOnline()
-        #        if not _sync and _online:
-        #            self.clonesInSync = False
-        #        else:
-        #            pass
-        #    if not self.clonesInSync:
-        #        self.autoCloneSync()
-        #    else:
-        #        pass
+        if self.script_running: # Skip the short poll while a camera feed is displayed
+            pass
+        else:
+            self.clonesInSync = True
+            for node in self.nodes:
+                self.nodes[node].update()
+                _sync = self.nodes[node].getSync()
+                _online = self.nodes[node].getOnline()
+                if not _sync and _online:
+                    self.clonesInSync = False
+                else:
+                    pass
+            if not self.clonesInSync:
+                self.autoCloneSync()
+            else:
+                pass
 
     def longPoll(self):
         pass
