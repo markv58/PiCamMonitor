@@ -361,3 +361,5 @@ v2.0.3 Bugs fixed and preperation for future enhancements
 v2.0.4 Bug fix that caused crash when running 4x feed
 
 v2.3.0 Major update allows for any type of screen to be used with the master and clones with some limitations. Screen brightnes can't be controled on generic screen by PCM. There are more cameras allowed and Blue Iris group feeds are recommended. This version has a collection of custom sounds to announce alerts and a camera hold option to remain on a feed for an unlimited amount of time.
+
+v2.3.1 Enabled short poll to check for clone sync, set short poll to 300 and long poll (not used) to 500.
