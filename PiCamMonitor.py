@@ -26,7 +26,7 @@ logging.getLogger('urllib3').setLevel(logging.ERROR)
 
 SPATH = "/home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/./"
 
-XSPATHGEN = "/home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/./screenCtrl3Gen.sh"
+XSPATHGEN = "/home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/./screenCtrl3gen.sh"
 XSPATH = "/home/pi/.polyglot/nodeservers/PiCamMonitor/Scripts/./screenCtrl.sh"
 
 SOUNDPATH = "/Sounds/"
