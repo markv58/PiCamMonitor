@@ -3,6 +3,9 @@
 # Provides: omxplayer
 ### END INIT INFO
 
+#################    This is for a generic screen 1920 x 180
+
+
 #---------           Edit the values below carefuly to adjust screen size if you are not using the    --------------
 #                    official Raspberry Pi 7" screen
 #
