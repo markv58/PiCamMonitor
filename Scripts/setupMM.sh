@@ -18,20 +18,20 @@ case "$1" in
       echo "The MagicMirror2 files are already installed"
       exit
     else
-      cp ~/PCM-UDI-Clone/config.js ~/MagicMirror/config/
-      cp ~/PCM-UDI-Clone/custom.css ~/MagicMirror/css/
-      cp ~/PCM-UDI-Clone/main.css ~/MagicMirror/css/
+      cp ~/.polyglot/nodeservers/PiCamMonitor/Files/config.js ~/MagicMirror/config/
+      cp ~/.polyglot/nodeservers/PiCamMonitor/Files/custom.css ~/MagicMirror/css/
+      cp ~/.polyglot/nodeservers/PiCamMonitor/Files/main.css ~/MagicMirror/css/
       mkdir ~/MagicMirror/modules/Pictures
-      cp /home/pi/PCM-UDI-Clone/sample.jpg /home/pi/MagicMirror/modules/Pictures/
+      cp ~/.polyglot/nodeservers/PiCamMonitor/Images/sample.jpg /home/pi/MagicMirror/modules/Pictures/
       echo "The MagicMirror2 files have been installed"
     fi
     ;;
   force)
-    cp ~/PCM-UDI-Clone/config.js ~/MagicMirror/config/
-    cp ~/PCM-UDI-Clone/custom.css ~/MagicMirror/css/
-    cp ~/PCM-UDI-Clone/main.css ~/MagicMirror/css/
+    cp ~/.polyglot/nodeservers/PiCamMonitor/Files/config.js ~/MagicMirror/config/
+    cp ~/.polyglot/nodeservers/PiCamMonitor/Files/custom.css ~/MagicMirror/css/
+    cp ~/.polyglot/nodeservers/PiCamMonitor/Files/main.css ~/MagicMirror/css/
     mkdir ~/MagicMirror/modules/Pictures
-    cp /home/pi/PCM-UDI-Clone/sample.jpg /home/pi/MagicMirror/modules/Pictures/
+    cp ~/.polyglot/nodeservers/PiCamMonitor/Files/sample.jpg /home/pi/MagicMirror/modules/Pictures/
     echo "The MagicMirror2 files have been installed"
     ;;
 
