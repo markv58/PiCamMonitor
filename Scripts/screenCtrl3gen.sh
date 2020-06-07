@@ -1,5 +1,3 @@
-                                                                                            
-
 #!/bin/bash
 ### BEGIN INIT INFO
 # Provides: omxplayer
