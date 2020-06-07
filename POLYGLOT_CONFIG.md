@@ -1,3 +1,5 @@
+If at anytime there is a repeating Connect Disconnect message in the log this is due to an error and Polyglot should be restarted or hitting Restart then Stop repeatedly until PCM stops will clear the errors.
+
 #### cam1, cam2, cam3 and cam4 must be in the custom configuration parameters to use the multi cam feeds.(Cams 1+2, Cams 2+4, etc)
 
 A typical path to a camera feed:
