@@ -1,4 +1,4 @@
-  GNU nano 3.2                                                                                     screenCtrlGen.sh                                                                                               
+                                                                                            
 
 #!/bin/bash
 ### BEGIN INIT INFO
