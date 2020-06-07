@@ -21,7 +21,7 @@ On BlueIris you can set the stream preferences. See BI help section.
 
 The PiCamMonitor will automatically start up and run the feature option using these settings. Use lower case for all input.
 
-    stand_alone = true or false (false default, set to true if running on a RPi with the 7" official screen).
+    stand_alone = true or false (false default, set to true if running on a RPi false if on Polisy).
     
     mm_installed = true or false (false default, set to true if you have a working MagicMirror install).
                                  (MagicMirror2 MUST be installed on all clones and on the stand-alone or setting)
