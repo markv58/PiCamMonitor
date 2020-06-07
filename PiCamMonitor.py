@@ -903,6 +903,7 @@ class Controller(polyinterface.Controller):
             pass
 
         if _sound > 1 and _sound < 18 :
+            if self.show_debug_log: LOGGER.debug('Playing sound %s', _sound) 
             if self.playSound and self.standalone: # for the master and clone
                 p1 = subprocess.Popen(["aplay", "-q", "/home/pi/.polyglot/nodeservers/PiCamMonitor/Sounds/" + str(SOUNDS[_sound])])
                 self.sendCloneCmd('sound' + str(_sound))
