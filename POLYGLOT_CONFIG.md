@@ -39,7 +39,7 @@ The PiCamMonitor will automatically start up and run the feature option using th
     pic_frame_timer = 10 - 120 (sets the default time a picture displays in the PictureFrame feature, 60 seconds default).
     pic_frame_folder = 1 - 21 (sets the default PictureFrame folder, 1 default)(Does not affect MagicMirror).
     
-    sound_on = true or false (default sound setting, false default).
+    sound = 0 - 17 (start up sound setting, 0 default).
     
     triple_feed1 The camera to display in the main window.                Any of the 4 cams
     triple_feed2 The camera to display in the top right windowl.       cam1 cam2 cam3 or cam4
