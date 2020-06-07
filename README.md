@@ -347,7 +347,8 @@ https://forum.universal-devices.com/topic/25817-polyglot-v2-picammonitor
 #### Update info
 
 v2.3.4 Fixed a script error that only effected a stand-alone RPi install. New sound files to compensate for a delay over HDMI.
-
+       It may be nesseccarry to restart Polyglot due to the script errors.
+       
 v2.3.3 Got in a hurry and had a typo.
 
 v2.3.2 Fixed file name for generic master.
