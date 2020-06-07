@@ -14,6 +14,7 @@ If you are running BlueIris software, you can get your streams from there:
     
 On BlueIris you can set the stream preferences. See BI help section.
 
+Camera Feed Play:
 - Cams 1+2 plays cam1 and cam2 in 2 equal size windows
 - Cams 3+4 plays cam3 and cam4 in 2 equal size windows
 - Cams x 3 plays three cams in a large main window and 2 smaller side windows, defaults to cam1, cam2 and cam3, can be changed in custom configuration parameters.
