@@ -367,3 +367,5 @@ v2.3.0 Major update allows for any type of screen to be used with the master and
 v2.3.1 Enabled short poll to check for clone sync, set short poll to 300 and long poll (not used) to 500.
 
 v2.3.2 Fixed file name for generic master
+
+v2.3.3 Got in a hurry and had a typo
