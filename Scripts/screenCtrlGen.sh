@@ -117,10 +117,10 @@ case "$1" in
     DISPLAY=:0.0 XAUTHORITY=/home/pi/.Xauthority /usr/bin/feh -q -Z -F -Y /home/pi/.polyglot/nodeservers/PiCamMonitor/Images/blank.png
     ;;
   on)
-    echo 0 | sudo tee /sys/class/backlight/rpi_backlight/bl_power
+    exit
     ;;
   off)
-    echo 1 | sudo tee /sys/class/backlight/rpi_backlight/bl_power
+    exit
     ;;
   pkill)
     sudo pkill feh
