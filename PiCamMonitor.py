@@ -963,9 +963,12 @@ class Controller(polyinterface.Controller):
             try:
                 if self.genScreenConnected:
                     r = subprocess.call([XSPATHGEN, *args])
-                    #LOGGER.debug('Using the XPATHGEN script') #######################
+                    if self.show_debug_log: LOGGER.debug('Using the XPATHGEN script')
+                    if self.show_debug_log:
+                    LOGGER.debug('Master command %s return code %s ', args, r)  
                 else:
                     r = subprocess.call([XSPATH, *args])
+                    if self.show_debug_log: LOGGER.debug('Using the XPATH script')
                 if self.show_debug_log:
                     LOGGER.debug('Master command %s return code %s ', args, r)
             except requests.exceptions.RequestException as e:
