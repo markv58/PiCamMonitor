@@ -965,7 +965,7 @@ class Controller(polyinterface.Controller):
                     r = subprocess.call([XSPATHGEN, *args])
                     if self.show_debug_log: LOGGER.debug('Using the XPATHGEN script')
                     if self.show_debug_log:
-                    LOGGER.debug('Master command %s return code %s ', args, r)  
+                        LOGGER.debug('Master command %s return code %s ', args, r)  
                 else:
                     r = subprocess.call([XSPATH, *args])
                     if self.show_debug_log: LOGGER.debug('Using the XPATH script')
