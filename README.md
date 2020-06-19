@@ -346,6 +346,8 @@ https://forum.universal-devices.com/topic/25817-polyglot-v2-picammonitor
 
 #### Update info
 
+v2.3.5 Fixed bug in clone command error reporting, removed unnecessary commands from shutdown and reboot clone.
+
 v2.3.4 Fixed a script error that only effected a stand-alone RPi install. New sound files to compensate for a delay over HDMI.
        It may be nesseccarry to restart Polyglot due to the script errors.
        
