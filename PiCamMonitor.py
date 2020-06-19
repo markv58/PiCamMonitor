@@ -1319,7 +1319,7 @@ class CloneNode(polyinterface.Node):
             except requests.exceptions.RequestException as e:
                 self.setSyncFalse()
                 self.parent.cloneSyncBad = True
-                LOGGER.warning('There was a problem sending the command to Clone %s. Error %s ', ip, e )
+                LOGGER.warning('There was a problem sending the command to Clone %s. Error %s ', _ip, e )
                 return None
         else:
             pass
@@ -1332,14 +1332,11 @@ class CloneNode(polyinterface.Node):
         LOGGER.info('Shutting down the Clone ' + self.address )
         self.setOffNetwork()
         time.sleep(1)
-        self.CloneCmd('off')
         self.CloneCmd('shutDownPi')
 
     def piReboot(self,command):
         LOGGER.info('Rebooting the Clone in 2 seconds ' + self.address )
         self.setOffNetwork()
-        time.sleep(1)
-        self.CloneCmd('off')
         time.sleep(1)
         self.CloneCmd('rebootPi')
 
