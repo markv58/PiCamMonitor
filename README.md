@@ -195,7 +195,7 @@ Three more quick installs and we are ready for MagicMirror2 and Polyglot. Enter 
 Execute the following one at a time:
 
     cd ~
-    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
     sudo apt install -y nodejs
 
     git clone https://github.com/MichMich/MagicMirror
